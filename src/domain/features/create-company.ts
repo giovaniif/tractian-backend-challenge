@@ -1,3 +1,5 @@
+import { Company } from '@/domain/models'
+
 export interface CreateCompany {
   perform: (params: CreateCompany.Params) => Promise<CreateCompany.Result>
 }
@@ -7,5 +9,5 @@ export namespace CreateCompany {
     companyName: string
   }
 
-  export type Result = any
+  export type Result = Company | Error
 }
