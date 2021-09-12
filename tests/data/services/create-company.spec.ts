@@ -1,16 +1,26 @@
-import { mock } from 'jest-mock-extended'
+import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CompanyRepository } from '@/data/contracts/repos'
 import { CreateCompanyService } from '@/data/services'
 
 describe('Create Company Service', () => {
+  let sut: CreateCompanyService
+  let companyName: string
+  let companyRepo: MockProxy<CompanyRepository>
+
+  beforeAll(() => {
+    companyName = 'any_name'
+    companyRepo = mock()
+  })
+
+  beforeEach(() => {
+    sut = new CreateCompanyService(companyRepo)
+  })
+
   it('should call create company with correct params', async () => {
-    const companyRepo = mock<CompanyRepository>()
-    const sut = new CreateCompanyService(companyRepo)
+    await sut.perform({ companyName })
 
-    await sut.perform({ companyName: 'any_name' })
-
-    expect(companyRepo.create).toHaveBeenCalledWith({ companyName: 'any_name' })
+    expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
     expect(companyRepo.create).toHaveBeenCalledTimes(1)
   })
 })
