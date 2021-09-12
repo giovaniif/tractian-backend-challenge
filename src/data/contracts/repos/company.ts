@@ -1,5 +1,8 @@
+import { Company } from "@/domain/models"
+
 export interface CompanyRepository {
-  create: (params: CompanyRepository.Params) => Promise<CompanyRepository.Result>
+  load: (params: CompanyRepository.Params) => Promise<CompanyRepository.LoadResult>
+  create: (params: CompanyRepository.Params) => Promise<CompanyRepository.CreateResult>
 }
 
 export namespace CompanyRepository {
@@ -7,5 +10,6 @@ export namespace CompanyRepository {
     companyName: string
   }
 
-  export type Result = void
+  export type CreateResult = void
+  export type LoadResult = Company | undefined
 }
