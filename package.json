@@ -4,16 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "test": "jest --passWithNoTests --no-cache --runInBand",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
+    "test:staged": "npm run test -- --findRelatedTests"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^27.0.1",
+    "@types/module-alias": "^2.0.1",
     "@types/node": "^16.9.1",
     "jest": "^27.1.1",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2"
   }
 }
