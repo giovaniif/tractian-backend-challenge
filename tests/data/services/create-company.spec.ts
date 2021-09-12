@@ -2,6 +2,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CompanyRepository } from '@/data/contracts/repos'
 import { CreateCompanyService } from '@/data/services'
+import { NameAlreadyInUseError } from '@/domain/errors'
 
 describe('Create Company Service', () => {
   let sut: CreateCompanyService
@@ -11,6 +12,11 @@ describe('Create Company Service', () => {
   beforeAll(() => {
     companyName = 'any_name'
     companyRepo = mock()
+    companyRepo.load.mockResolvedValue({
+      name: 'any_name',
+      units: [],
+      users: [],
+    })
   })
 
   beforeEach(() => {
@@ -31,5 +37,11 @@ describe('Create Company Service', () => {
 
     expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
     expect(companyRepo.create).toHaveBeenCalledTimes(1)
+  })
+
+  it('should return a NameAlreadyInUseError if CompanyRepo.load returns data', async () => {
+    const error = await sut.perform({ companyName })
+
+    expect(error).toEqual(new NameAlreadyInUseError())
   })
 })

@@ -1,4 +1,4 @@
-import { Company } from "@/domain/models"
+import { Company } from '@/domain/models'
 
 export interface CompanyRepository {
   load: (params: CompanyRepository.Params) => Promise<CompanyRepository.LoadResult>
