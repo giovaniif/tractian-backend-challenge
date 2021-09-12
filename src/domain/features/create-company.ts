@@ -1,3 +1,11 @@
 export interface CreateCompany {
-  perform: (companyName: string) => Promise<any>
+  perform: (params: CreateCompany.Params) => Promise<CreateCompany.Result>
+}
+
+export namespace CreateCompany {
+  export type Params = {
+    companyName: string
+  }
+
+  export type Result = any
 }
