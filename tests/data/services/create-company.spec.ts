@@ -17,10 +17,10 @@ describe('Create Company Service', () => {
     sut = new CreateCompanyService(companyRepo)
   })
 
-  it('should call create company with correct params', async () => {
+  it('should call load company with correct params', async () => {
     await sut.perform({ companyName })
 
-    expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
-    expect(companyRepo.create).toHaveBeenCalledTimes(1)
+    expect(companyRepo.load).toHaveBeenCalledWith({ companyName })
+    expect(companyRepo.load).toHaveBeenCalledTimes(1)
   })
 })
