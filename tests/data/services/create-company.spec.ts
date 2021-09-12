@@ -2,7 +2,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CompanyRepository } from '@/data/contracts/repos'
 import { CreateCompanyService } from '@/data/services'
-import { NameAlreadyInUseError } from '@/domain/errors'
+import { NameAlreadyInUseError, InvalidNameError } from '@/domain/errors'
 
 describe('Create Company Service', () => {
   let sut: CreateCompanyService
@@ -12,11 +12,7 @@ describe('Create Company Service', () => {
   beforeAll(() => {
     companyName = 'any_name'
     companyRepo = mock()
-    companyRepo.load.mockResolvedValue({
-      name: 'any_name',
-      units: [],
-      users: [],
-    })
+    companyRepo.load.mockResolvedValue(undefined)
   })
 
   beforeEach(() => {
@@ -31,8 +27,6 @@ describe('Create Company Service', () => {
   })
 
   it('should call create if load company returns undefined', async () => {
-    companyRepo.load.mockResolvedValueOnce(undefined)
-    
     await sut.perform({ companyName })
 
     expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
@@ -40,8 +34,19 @@ describe('Create Company Service', () => {
   })
 
   it('should return a NameAlreadyInUseError if CompanyRepo.load returns data', async () => {
+    companyRepo.load.mockResolvedValueOnce({
+      name: 'any_name',
+      units: [],
+      users: [],
+    })
     const error = await sut.perform({ companyName })
 
     expect(error).toEqual(new NameAlreadyInUseError())
+  })
+
+  it('should return an InvalidNameError if the name length is smaller than 2', async () => {
+    const error = await sut.perform({ companyName: 'a' })
+    
+    expect(error).toEqual(new InvalidNameError())
   })
 })

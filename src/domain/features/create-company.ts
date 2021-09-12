@@ -1,5 +1,5 @@
 import { Company } from '@/domain/models'
-import { NameAlreadyInUseError } from '@/domain/errors'
+import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 
 export interface CreateCompany {
   perform: (params: CreateCompany.Params) => Promise<CreateCompany.Result>
@@ -10,5 +10,5 @@ export namespace CreateCompany {
     companyName: string
   }
 
-  export type Result = Company | NameAlreadyInUseError
+  export type Result = Company | NameAlreadyInUseError | InvalidNameError
 }
