@@ -10,6 +10,6 @@ export namespace CompanyRepository {
     companyName: string
   }
 
-  export type CreateResult = void
+  export type CreateResult = Company
   export type LoadResult = Company | undefined
 }

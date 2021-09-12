@@ -5,13 +5,14 @@ import { CreateCompany } from '@/domain/features'
 export class CreateCompanyService implements CreateCompany {
   constructor(private readonly companyRepo: CompanyRepository) {}
 
-  async perform(params: CreateCompany.Params): Promise<any> {
+  async perform(params: CreateCompany.Params): Promise<CreateCompany.Result> {
     if (params.companyName === undefined || params.companyName.length < 2) return new InvalidNameError()
     
     const companyExists = await this.companyRepo.load(params)
     
     if (companyExists) return new NameAlreadyInUseError()
     
-    await this.companyRepo.create(params)
+    const company = await this.companyRepo.create(params)
+    return company
   }
 }

@@ -13,6 +13,7 @@ describe('Create Company Service', () => {
     companyName = 'any_name'
     companyRepo = mock()
     companyRepo.load.mockResolvedValue(undefined)
+    companyRepo.create.mockResolvedValue({ name: 'any_name', units: [], users: [] })
   })
 
   beforeEach(() => {
@@ -24,13 +25,6 @@ describe('Create Company Service', () => {
 
     expect(companyRepo.load).toHaveBeenCalledWith({ companyName })
     expect(companyRepo.load).toHaveBeenCalledTimes(1)
-  })
-
-  it('should call create if load company returns undefined', async () => {
-    await sut.perform({ companyName })
-
-    expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
-    expect(companyRepo.create).toHaveBeenCalledTimes(1)
   })
 
   it('should return a NameAlreadyInUseError if CompanyRepo.load returns data', async () => {
@@ -48,5 +42,18 @@ describe('Create Company Service', () => {
     const error = await sut.perform({ companyName: 'a' })
     
     expect(error).toEqual(new InvalidNameError())
+  })
+
+  it('should call create if load company returns undefined', async () => {
+    await sut.perform({ companyName })
+
+    expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
+    expect(companyRepo.create).toHaveBeenCalledTimes(1)
+  })
+
+  it('should return the created company if service performs', async () => {
+    const company = await sut.perform({ companyName })
+    
+    expect(company).toEqual({ name: 'any_name', units: [], users: [] })
   })
 })
