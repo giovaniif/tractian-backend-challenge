@@ -1,24 +1,5 @@
-import { CreateCompany } from '@/domain/features'
-
-class CreateCompanyService {
-  constructor(private readonly companyRepo: CompanyRepository) {}
-
-  async perform(params: CreateCompany.Params): Promise<void> {
-    await this.companyRepo.create(params)
-  }
-}
-
-interface CompanyRepository {
-  create: (params: CompanyRepository.Params) => Promise<CompanyRepository.Result>
-}
-
-export namespace CompanyRepository {
-  export type Params = {
-    companyName: string
-  }
-
-  export type Result = void
-}
+import { CompanyRepository } from "@/data/contracts/repos"
+import { CreateCompanyService } from '@/data/services'
 
 class CompanyRepositorySpy implements CompanyRepository {
   companyName?: string
