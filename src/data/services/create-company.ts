@@ -5,6 +5,8 @@ export class CreateCompanyService {
   constructor(private readonly companyRepo: CompanyRepository) {}
 
   async perform(params: CreateCompany.Params): Promise<void> {
-    await this.companyRepo.load(params)
+    const companyExists = await this.companyRepo.load(params)
+    
+    if (!companyExists) await this.companyRepo.create(params)
   }
 }
