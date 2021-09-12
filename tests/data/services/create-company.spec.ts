@@ -23,4 +23,13 @@ describe('Create Company Service', () => {
     expect(companyRepo.load).toHaveBeenCalledWith({ companyName })
     expect(companyRepo.load).toHaveBeenCalledTimes(1)
   })
+
+  it('should call create if load company returns undefined', async () => {
+    companyRepo.load.mockResolvedValueOnce(undefined)
+    
+    await sut.perform({ companyName })
+
+    expect(companyRepo.create).toHaveBeenCalledWith({ companyName })
+    expect(companyRepo.create).toHaveBeenCalledTimes(1)
+  })
 })
