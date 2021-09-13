@@ -1,11 +1,12 @@
 import { CreateCompany } from '@/domain/features'
-import { HttpResponse } from '@/application/helpers'
+import { HttpResponse, ok, badRequest } from '@/application/helpers'
+import { Company } from '@/domain/models'
 
 type HttpRequest = {
   companyName: string
 }
 
-type Response = Error | object
+type Response = Error | Company
 
 export class CreateCompanyController {
   constructor(private readonly service: CreateCompany) {}
@@ -14,15 +15,9 @@ export class CreateCompanyController {
     const result = await this.service.perform({ companyName: httpRequest.companyName })
 
     if (result instanceof Error) {
-      return {
-        statusCode: 400,
-        data: result,
-      }
+      return badRequest(result)
     }
 
-    return {
-      statusCode: 200,
-      data: result,
-    }
+    return ok(result)
   }
 }
