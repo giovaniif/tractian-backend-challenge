@@ -10,6 +10,7 @@ describe('Create Company Controller', () => {
 
   beforeAll(() => {
     createCompanyService = mock()
+    createCompanyService.perform.mockResolvedValue({ name: companyName, users: [], units: [] })
   })
 
   beforeEach(() => {
@@ -31,6 +32,15 @@ describe('Create Company Controller', () => {
     expect(httpResponse).toEqual({
       statusCode: 400,
       data: new Error('any_creation_error')
+    })
+  })
+
+  it('should return 200 if creation succeeds', async () => {
+    const httpResponse = await sut.handle({ companyName })
+
+    expect(httpResponse).toEqual({
+      statusCode: 200,
+      data: { name: companyName, users: [], units: [] }
     })
   })
 })

@@ -22,7 +22,7 @@ export class CreateCompanyController {
 
     return {
       statusCode: 200,
-      data: {}
+      data: result,
     }
   }
 }
