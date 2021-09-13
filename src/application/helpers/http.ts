@@ -1,3 +1,5 @@
+import { ServerError } from '@/application/errors'
+
 export type HttpResponse<T = any> = {
   statusCode: number
   data: T
@@ -16,3 +18,11 @@ export const badRequest = (error: Error): HttpResponse<Error> => {
     data: error
   }
 }
+
+export const serverError = (error: Error): HttpResponse<Error> => {
+  return {
+    statusCode: 500,
+    data: new ServerError(error)
+  }
+}
+
