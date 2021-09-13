@@ -22,4 +22,15 @@ describe('Create Company Controller', () => {
     expect(createCompanyService.perform).toHaveBeenCalledWith({ companyName })
     expect(createCompanyService.perform).toHaveBeenCalledTimes(1)
   })
+
+  it('should return 400 if creation fails', async () => {
+    createCompanyService.perform.mockResolvedValueOnce(new Error('any_creation_error'))
+
+    const httpResponse = await sut.handle({ companyName })
+
+    expect(httpResponse).toEqual({
+      statusCode: 400,
+      data: new Error('any_creation_error')
+    })
+  })
 })
