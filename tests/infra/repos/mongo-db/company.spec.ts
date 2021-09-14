@@ -1,40 +1,15 @@
-import { Connection, createConnection, Entity, Column, ObjectID, ObjectIdColumn, getConnection, getMongoRepository, MongoRepository } from 'typeorm'
+import { createConnection, getConnection, getMongoRepository, MongoRepository } from 'typeorm'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
-import { CompanyRepository } from '@/data/contracts/repos'
-
-class MongoDBCompanyRepository  {
-  async load (params: CompanyRepository.Params): Promise<CompanyRepository.LoadResult> {
-    const repo = getMongoRepository(MongoCompany)
-
-    const company = await repo.findOne({ where: { name: params.companyName } })
-    if (!company) return undefined
-
-    return company
-  }
-}
-
-@Entity()
-class MongoCompany {
-  @ObjectIdColumn()
-  id!: ObjectID
-
-  @Column()
-  name!: string
-
-  @Column({ type: 'array' })
-  users!: object[]
-
-  @Column({ type: 'array' })
-  units!: object[]
-}
+import { MongoDBCompanyRepository } from '@/infra/repos/mongo-db'
+import { MongoCompany } from '@/infra/entities/mongo-db'
 
 const makeFakeDb = async (entities?: any[]): Promise<MongoMemoryServer> => {
   const mongo = await MongoMemoryServer.create()
   const connection = await createConnection({
     type: "mongodb",
     url: mongo.getUri(),
-    entities: entities ?? ['src/infra/repos/mongo-db/entities/index.ts'],
+    entities: entities ?? ['src/infra/entities/mongo-db/index.ts'],
     useUnifiedTopology: true,
   })
   await connection.synchronize()
