@@ -4,7 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import { CompanyRepository } from '@/data/contracts/repos'
 
 class MongoDBCompanyRepository  {
-  async load (params: CompanyRepository.Params): Promise<any> {
+  async load (params: CompanyRepository.Params): Promise<CompanyRepository.LoadResult> {
     const repo = getRepository(MongoCompany)
 
     const company = await repo.findOne({ where: { name: params.companyName } })
