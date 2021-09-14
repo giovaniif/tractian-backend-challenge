@@ -19,11 +19,13 @@
     "@types/node": "^16.9.1",
     "jest": "^27.1.1",
     "jest-mock-extended": "^2.0.2-beta2",
+    "mongodb-memory-server": "^7.4.0",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.3"
   },
   "dependencies": {
     "module-alias": "^2.2.2",
+    "mongoose": "5.x",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2"
   }
