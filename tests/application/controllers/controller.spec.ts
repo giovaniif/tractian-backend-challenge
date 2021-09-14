@@ -5,7 +5,7 @@ import { ServerError } from '@/application/errors'
 class ControllerStub extends Controller {
   result: HttpResponse = {
     statusCode: 200,
-    data: 'any_data'
+    data: 'any_value'
   }
   
   async perform (httpRequest: any): Promise<HttpResponse<any>> {
@@ -30,6 +30,12 @@ describe('Controller', () => {
       statusCode: 500,
       data: new ServerError(error),
     })
+  })
+
+  it('should return same result as perform', async () => {
+    const httpResponse = await sut.handle('any_value')
+
+    expect(httpResponse).toEqual(sut.result)
   })
 })
 
