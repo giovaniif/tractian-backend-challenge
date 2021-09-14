@@ -8,8 +8,9 @@ class MongoDBCompanyRepository  {
     const repo = getRepository(MongoCompany)
 
     const company = await repo.findOne({ where: { name: params.companyName } })
-
     if (!company) return undefined
+
+    return company
   }
 }
 
@@ -51,6 +52,17 @@ describe('Company Repository', () => {
       const response = await sut.load({ companyName: 'invalid_name' })
 
       expect(response).toBeUndefined()
+    })
+
+    it('should return the company if company exists', async () => {
+      const sut = new MongoDBCompanyRepository()
+      const repo = getRepository(MongoCompany)
+      const company = repo.create({ name: 'any_name', units: [], users: [] })
+      await repo.save(company)
+
+      const response = await sut.load({ companyName: 'any_name' })
+
+      expect(response).toEqual(company)
     })
   })
 })
