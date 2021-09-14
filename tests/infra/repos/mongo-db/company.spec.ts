@@ -1,11 +1,11 @@
-import { Connection, createConnection, Entity, Column, ObjectID, ObjectIdColumn, getRepository } from 'typeorm'
+import { Connection, createConnection, Entity, Column, ObjectID, ObjectIdColumn, getConnection, getMongoRepository, MongoRepository } from 'typeorm'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
 import { CompanyRepository } from '@/data/contracts/repos'
 
 class MongoDBCompanyRepository  {
   async load (params: CompanyRepository.Params): Promise<CompanyRepository.LoadResult> {
-    const repo = getRepository(MongoCompany)
+    const repo = getMongoRepository(MongoCompany)
 
     const company = await repo.findOne({ where: { name: params.companyName } })
     if (!company) return undefined
@@ -33,6 +33,8 @@ describe('Company Repository', () => {
   describe('load', () => {
     let mongo: MongoMemoryServer
     let connection: Connection
+    let repo: MongoRepository<MongoCompany>
+    let sut: MongoDBCompanyRepository
 
     beforeAll(async () => {
       mongo = await MongoMemoryServer.create()
@@ -44,25 +46,32 @@ describe('Company Repository', () => {
         useUnifiedTopology: true,
       })
       await connection.synchronize()
+      repo = getMongoRepository(MongoCompany)
     })
 
-    it('should return undefined if company does not exists', async () => {
-      const sut = new MongoDBCompanyRepository()
-
-      const response = await sut.load({ companyName: 'invalid_name' })
-
-      expect(response).toBeUndefined()
+    beforeEach(async () => {
+      await connection.getMongoRepository(MongoCompany).deleteMany({})
+      sut = new MongoDBCompanyRepository()
     })
 
-    it('should return the company if company exists', async () => {
-      const sut = new MongoDBCompanyRepository()
-      const repo = getRepository(MongoCompany)
+    afterAll(async () => {
+      await getConnection().close()
+      await mongo.stop()
+    })
+
+    it('should return the company if it exists', async () => {
       const company = repo.create({ name: 'any_name', units: [], users: [] })
       await repo.save(company)
 
       const response = await sut.load({ companyName: 'any_name' })
 
       expect(response).toEqual(company)
+    })
+
+    it('should return undefined if company does not exists', async () => {
+      const response = await sut.load({ companyName: 'any_name' })
+
+      expect(response).toBeUndefined()
     })
   })
 })
