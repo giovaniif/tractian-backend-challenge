@@ -29,28 +29,31 @@ class MongoCompany {
   units!: object[]
 }
 
+const makeFakeDb = async (entities?: any[]): Promise<MongoMemoryServer> => {
+  const mongo = await MongoMemoryServer.create()
+  const connection = await createConnection({
+    type: "mongodb",
+    url: mongo.getUri(),
+    entities: entities ?? ['src/infra/repos/mongo-db/entities/index.ts'],
+    useUnifiedTopology: true,
+  })
+  await connection.synchronize()
+  return mongo
+}
+
 describe('Company Repository', () => {
   describe('load', () => {
-    let mongo: MongoMemoryServer
-    let connection: Connection
     let repo: MongoRepository<MongoCompany>
     let sut: MongoDBCompanyRepository
+    let mongo: MongoMemoryServer
 
     beforeAll(async () => {
-      mongo = await MongoMemoryServer.create()
-      const mongoUri = mongo.getUri()
-      connection = await createConnection({
-        type: "mongodb",
-        url: mongoUri,
-        entities: [MongoCompany],
-        useUnifiedTopology: true,
-      })
-      await connection.synchronize()
+      mongo = await makeFakeDb([MongoCompany])
       repo = getMongoRepository(MongoCompany)
     })
 
     beforeEach(async () => {
-      await connection.getMongoRepository(MongoCompany).deleteMany({})
+      await getConnection().getMongoRepository(MongoCompany).deleteMany({})
       sut = new MongoDBCompanyRepository()
     })
 
