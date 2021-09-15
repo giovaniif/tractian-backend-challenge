@@ -1,6 +1,8 @@
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
+import { adaptExpressRoute } from '@/infra/http'
+import { makeCreateCompanyController } from '@/main/factories/controllers'
 
 export default (router: Router): void => {
-  router.post('/company', (req: Request, res: Response) => res.send({ data: 'any_data' }))
+  router.post('/company', adaptExpressRoute(makeCreateCompanyController()))
 }
 
