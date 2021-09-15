@@ -13,6 +13,6 @@ export class CreateCompanyService implements CreateCompany {
     if (companyExists) return new NameAlreadyInUseError()
     
     const company = await this.companyRepo.create(params)
-    return company
+    return { id: company.id, companyName: company.name }
   }
 }

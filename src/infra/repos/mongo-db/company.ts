@@ -23,6 +23,6 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
     const repo = getMongoRepository(MongoCompany)
     const company = repo.create({ name: params.companyName })
     await repo.save(company)
-    return company
+    return { id: company.id.toString(), name: company.name }
   }
 }

@@ -7,10 +7,11 @@ describe('Create Company Controller', () => {
   let sut: CreateCompanyController
   let createCompanyService: MockProxy<CreateCompany>
   const companyName = 'any_name'
+  const id = 'any_id'
 
   beforeAll(() => {
     createCompanyService = mock()
-    createCompanyService.perform.mockResolvedValue({ name: companyName, users: [], units: [] })
+    createCompanyService.perform.mockResolvedValue({ companyName, id  })
   })
 
   beforeEach(() => {
@@ -40,7 +41,7 @@ describe('Create Company Controller', () => {
 
     expect(httpResponse).toEqual({
       statusCode: 200,
-      data: { name: companyName, users: [], units: [] }
+      data: { companyName, id }
     })
   })
 })

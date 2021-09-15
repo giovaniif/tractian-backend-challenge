@@ -21,5 +21,5 @@ export namespace CreateCompanyRepository {
     companyName: string
   }
 
-  export type Result = Company
+  export type Result = { name: string, id: string }
 }

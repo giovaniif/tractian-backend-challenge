@@ -13,7 +13,7 @@ describe('Create Company Service', () => {
     companyName = 'any_name'
     companyRepo = mock()
     companyRepo.load.mockResolvedValue(undefined)
-    companyRepo.create.mockResolvedValue({ name: 'any_name', units: [], users: [] })
+    companyRepo.create.mockResolvedValue({ name: 'any_name', id: 'any_id' })
   })
 
   beforeEach(() => {
@@ -54,6 +54,6 @@ describe('Create Company Service', () => {
   it('should return the created company if service performs', async () => {
     const company = await sut.perform({ companyName })
     
-    expect(company).toEqual({ name: 'any_name', units: [], users: [] })
+    expect(company).toEqual({ companyName: 'any_name', id: 'any_id' })
   })
 })

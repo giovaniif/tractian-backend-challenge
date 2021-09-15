@@ -1,4 +1,3 @@
-import { Company } from '@/domain/models'
 import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 
 export interface CreateCompany {
@@ -10,5 +9,5 @@ export namespace CreateCompany {
     companyName: string
   }
 
-  export type Result = Company | NameAlreadyInUseError | InvalidNameError
+  export type Result = { companyName: string, id: string } | NameAlreadyInUseError | InvalidNameError
 }

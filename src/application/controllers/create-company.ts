@@ -1,13 +1,12 @@
 import { CreateCompany } from '@/domain/features'
 import { HttpResponse, ok, badRequest } from '@/application/helpers'
-import { Company } from '@/domain/models'
 import { Controller } from '@/application/controllers'
 
 type HttpRequest = {
   companyName: string
 }
 
-type Response = Error | Company
+type Response = Error | { id: string, companyName: string }
 
 export class CreateCompanyController extends Controller {
   constructor(private readonly service: CreateCompany) {
