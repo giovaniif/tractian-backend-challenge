@@ -1,9 +1,9 @@
-import { CompanyRepository } from '@/data/contracts/repos'
+import { CreateCompanyRepository, LoadCompanyRepository } from '@/data/contracts/repos'
 import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 import { CreateCompany } from '@/domain/features'
 
 export class CreateCompanyService implements CreateCompany {
-  constructor(private readonly companyRepo: CompanyRepository) {}
+  constructor(private readonly companyRepo: CreateCompanyRepository & LoadCompanyRepository) {}
 
   async perform(params: CreateCompany.Params): Promise<CreateCompany.Result> {
     if (params.companyName === undefined || params.companyName.length < 2) return new InvalidNameError()

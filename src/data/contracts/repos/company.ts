@@ -1,15 +1,25 @@
 import { Company } from '@/domain/models'
 
-export interface CompanyRepository {
-  load: (params: CompanyRepository.Params) => Promise<CompanyRepository.LoadResult>
-  create: (params: CompanyRepository.Params) => Promise<CompanyRepository.CreateResult>
+export interface LoadCompanyRepository {
+  load: (params: LoadCompanyRepository.Params) => Promise<LoadCompanyRepository.Result>
 }
 
-export namespace CompanyRepository {
+export namespace LoadCompanyRepository {
   export type Params = {
     companyName: string
   }
 
-  export type CreateResult = Company
-  export type LoadResult = Company | undefined
+  export type Result = Company | undefined
+}
+
+export interface CreateCompanyRepository {
+  create: (params: CreateCompanyRepository.Params) => Promise<CreateCompanyRepository.Result>
+}
+
+export namespace CreateCompanyRepository {
+  export type Params = {
+    companyName: string
+  }
+
+  export type Result = Company
 }

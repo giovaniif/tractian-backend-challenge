@@ -1,13 +1,13 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { CompanyRepository } from '@/data/contracts/repos'
+import { CreateCompanyRepository, LoadCompanyRepository } from '@/data/contracts/repos'
 import { CreateCompanyService } from '@/data/services'
 import { NameAlreadyInUseError, InvalidNameError } from '@/domain/errors'
 
 describe('Create Company Service', () => {
   let sut: CreateCompanyService
   let companyName: string
-  let companyRepo: MockProxy<CompanyRepository>
+  let companyRepo: MockProxy<CreateCompanyRepository & LoadCompanyRepository>
 
   beforeAll(() => {
     companyName = 'any_name'

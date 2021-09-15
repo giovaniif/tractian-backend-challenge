@@ -1,10 +1,16 @@
 import { getMongoRepository } from 'typeorm'
 
-import { CompanyRepository } from '@/data/contracts/repos'
+import { CreateCompanyRepository, LoadCompanyRepository } from '@/data/contracts/repos'
 import { MongoCompany } from '@/infra/entities/mongo-db'
 
-export class MongoDBCompanyRepository  {
-  async load (params: CompanyRepository.Params): Promise<CompanyRepository.LoadResult> {
+type LoadParams = LoadCompanyRepository.Params
+type LoadResult = LoadCompanyRepository.Result
+
+type CreateParams = CreateCompanyRepository.Params
+type CreateResult = CreateCompanyRepository.Result
+
+export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCompanyRepository {
+  async load (params: LoadParams): Promise<LoadResult> {
     const repo = getMongoRepository(MongoCompany)
 
     const company = await repo.findOne({ where: { name: params.companyName } })
@@ -13,7 +19,7 @@ export class MongoDBCompanyRepository  {
     return company
   }
 
-  async create(params: CompanyRepository.Params): Promise<CompanyRepository.CreateResult> {
+  async create(params: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoCompany)
     const company = repo.create({ name: params.companyName })
     await repo.save(company)
