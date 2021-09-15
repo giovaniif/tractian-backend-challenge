@@ -1,6 +1,6 @@
 import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm'
 
-@Entity()
+@Entity('companies')
 export class MongoCompany {
   @ObjectIdColumn()
   id!: ObjectID
