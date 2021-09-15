@@ -33,7 +33,7 @@ describe('Company Repository', () => {
 
       const response = await sut.load({ companyName: 'any_name' })
 
-      expect(response).toEqual(company)
+      expect(response).toEqual({ name: company.name, id: company.id.toString() })
     })
 
     it('should return undefined if company does not exists', async () => {

@@ -16,7 +16,7 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
     const company = await repo.findOne({ where: { name: params.companyName } })
     if (!company) return undefined
 
-    return company
+    return { id: company.id.toString(), name: company.name }
   }
 
   async create(params: CreateParams): Promise<CreateResult> {

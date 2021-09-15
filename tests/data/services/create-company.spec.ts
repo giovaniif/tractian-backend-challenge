@@ -30,8 +30,7 @@ describe('Create Company Service', () => {
   it('should return a NameAlreadyInUseError if CompanyRepo.load returns data', async () => {
     companyRepo.load.mockResolvedValueOnce({
       name: 'any_name',
-      units: [],
-      users: [],
+      id: 'any_id'
     })
     const error = await sut.perform({ companyName })
 
