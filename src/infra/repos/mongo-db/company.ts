@@ -12,4 +12,11 @@ export class MongoDBCompanyRepository  {
 
     return company
   }
+
+  async create(params: CompanyRepository.Params): Promise<CompanyRepository.CreateResult> {
+    const repo = getMongoRepository(MongoCompany)
+    const company = repo.create({ name: params.companyName })
+    await repo.save(company)
+    return company
+  }
 }

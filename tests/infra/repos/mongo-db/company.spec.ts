@@ -6,25 +6,26 @@ import { MongoCompany } from '@/infra/entities/mongo-db'
 import { makeFakeDb } from '@/tests/infra/mocks'
 
 describe('Company Repository', () => {
+  let repo: MongoRepository<MongoCompany>
+  let sut: MongoDBCompanyRepository
+  let mongo: MongoMemoryServer
+
+  beforeAll(async () => {
+    mongo = await makeFakeDb([MongoCompany])
+    repo = getMongoRepository(MongoCompany)
+  })
+
+  beforeEach(async () => {
+    await getConnection().getMongoRepository(MongoCompany).deleteMany({})
+    sut = new MongoDBCompanyRepository()
+  })
+
+  afterAll(async () => {
+    await getConnection().close()
+    await mongo.stop()
+  })
+
   describe('load', () => {
-    let repo: MongoRepository<MongoCompany>
-    let sut: MongoDBCompanyRepository
-    let mongo: MongoMemoryServer
-
-    beforeAll(async () => {
-      mongo = await makeFakeDb([MongoCompany])
-      repo = getMongoRepository(MongoCompany)
-    })
-
-    beforeEach(async () => {
-      await getConnection().getMongoRepository(MongoCompany).deleteMany({})
-      sut = new MongoDBCompanyRepository()
-    })
-
-    afterAll(async () => {
-      await getConnection().close()
-      await mongo.stop()
-    })
 
     it('should return the company if it exists', async () => {
       const company = repo.create({ name: 'any_name', units: [], users: [] })
@@ -39,6 +40,14 @@ describe('Company Repository', () => {
       const response = await sut.load({ companyName: 'any_name' })
 
       expect(response).toBeUndefined()
+    })
+  })
+
+  describe('create', () => {
+    it('should create company if name is defined', async () => {
+      const { name } = await sut.create({ companyName: 'any_name' })
+
+      expect(name).toBe('any_name')
     })
   })
 })
