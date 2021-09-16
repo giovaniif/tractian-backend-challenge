@@ -58,7 +58,7 @@ describe('ExpressRouter', () => {
 
     expect(res.status).toHaveBeenCalledWith(400)
     expect(res.status).toHaveBeenCalledTimes(1)
-    expect(res.json).toHaveBeenCalledWith(new Error('any_error'))
+    expect(res.json).toHaveBeenCalledWith({ error: 'any_error'})
     expect(res.json).toHaveBeenCalledTimes(1)
   })
 
@@ -71,7 +71,7 @@ describe('ExpressRouter', () => {
 
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.status).toHaveBeenCalledTimes(1)
-    expect(res.json).toHaveBeenCalledWith(new Error('any_error'))
+    expect(res.json).toHaveBeenCalledWith({ error: 'any_error' })
     expect(res.json).toHaveBeenCalledTimes(1)
   })
 })
