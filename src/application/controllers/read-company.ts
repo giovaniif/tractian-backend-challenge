@@ -3,7 +3,7 @@ import { badRequest, HttpResponse, ok } from '@/application/helpers'
 import { ReadCompany } from '@/domain/features/read-company'
 import { CompanyNotFoundError } from '@/application/errors'
 
-type Request = { companyName: string }
+type Request = { companyId: string }
 type Response = { companyName: string, id: string } | Error
 
 export class ReadCompanyController extends Controller {
@@ -11,8 +11,8 @@ export class ReadCompanyController extends Controller {
     super()
   }
 
-  async perform({ companyName }: Request): Promise<HttpResponse<Response>> {
-    const company = await this.service.perform({ companyName })
+  async perform({ companyId }: Request): Promise<HttpResponse<Response>> {
+    const company = await this.service.perform({ companyId })
 
     if (company) return ok(company)
 

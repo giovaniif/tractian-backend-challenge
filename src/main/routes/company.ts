@@ -4,6 +4,6 @@ import { makeCreateCompanyController, makeReadCompanyController } from '@/main/f
 
 export default (router: Router): void => {
   router.post('/company', adapt(makeCreateCompanyController()))
-  router.get('/company/:companyName', adapt(makeReadCompanyController()))
+  router.get('/company/:companyId', adapt(makeReadCompanyController()))
 }
 

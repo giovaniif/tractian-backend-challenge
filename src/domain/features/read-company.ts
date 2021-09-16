@@ -4,7 +4,7 @@ export interface ReadCompany {
 
 export namespace ReadCompany {
   export type Params = {
-    companyName: string
+    companyId: string
   }
 
   export type Result = undefined | { companyName: string, id: string }

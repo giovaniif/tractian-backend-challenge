@@ -8,11 +8,11 @@ describe('Read Company Controller', () => {
   let sut: ReadCompanyController
   let readCompanyService: MockProxy<ReadCompany>
   const companyName = 'any_name'
-  const id = 'any_id'
+  const companyId = 'any_id'
 
   beforeAll(() => {
     readCompanyService = mock()
-    readCompanyService.perform.mockResolvedValue({ companyName, id  })
+    readCompanyService.perform.mockResolvedValue({ companyName, id: companyId  })
   })
 
   beforeEach(() => {
@@ -20,22 +20,22 @@ describe('Read Company Controller', () => {
   })
   
   it('should call read company service with correct params', async () => {
-    await sut.handle({ companyName })
+    await sut.handle({ companyId })
 
-    expect(readCompanyService.perform).toHaveBeenCalledWith({ companyName })
+    expect(readCompanyService.perform).toHaveBeenCalledWith({ companyId })
     expect(readCompanyService.perform).toHaveBeenCalledTimes(1)
   })
 
   it('should return 200 with company data', async () => {
-    const response = await sut.handle({ companyName })
+    const response = await sut.handle({ companyId })
 
-    expect(response).toEqual({ statusCode: 200, data: { companyName, id } })
+    expect(response).toEqual({ statusCode: 200, data: { companyName, id: companyId } })
   })
 
   it('should return 200 with company data', async () => {
     const response = await sut.handle({ companyName })
 
-    expect(response).toEqual({ statusCode: 200, data: { companyName, id } })
+    expect(response).toEqual({ statusCode: 200, data: { companyName, id: companyId } })
   })
 
   it('should return 400 with CompanyNotFound', async () => {
