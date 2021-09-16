@@ -35,6 +35,14 @@ describe('Company Repository', () => {
       expect(response).toEqual({ name: company.name, id: company.id.toString() })
     })
 
+    it('should return undefined if company does not exists', async () => {
+      const response = await sut.load({ companyName: 'any_name' })
+
+      expect(response).toBeUndefined()
+    })
+  })
+
+  describe('load by id', () => {
     it('should load company by id', async () => {
       const company = repo.create({ name: 'any_name', units: [], users: [] })
       await repo.save(company)
@@ -45,7 +53,7 @@ describe('Company Repository', () => {
     })
 
     it('should return undefined if company does not exists', async () => {
-      const response = await sut.load({ companyName: 'any_name' })
+      const response = await sut.loadById({ companyId: 'a1425fcfcb3d856b5f7e49d9' })
 
       expect(response).toBeUndefined()
     })
