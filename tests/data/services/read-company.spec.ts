@@ -7,7 +7,9 @@ class ReadCompanyService {
   constructor(private readonly companyRepo: LoadCompanyRepository) {}
 
   async perform({ companyName }: ReadCompany.Params): Promise<ReadCompany.Result> {
-    await this.companyRepo.load({ companyName })
+    const company = await this.companyRepo.load({ companyName })
+
+    if (company) return { companyName: company.name, id: company.id }
   }
 }
 
@@ -37,5 +39,12 @@ describe('Read Company Service', () => {
     const response = await sut.perform({ companyName })
 
     expect(response).toBeUndefined()
+  })
+
+  it('should return company data if load returns data', async () => {
+    companyRepo.load.mockResolvedValueOnce({ name: 'any_name', id: 'any_id' })
+    const response = await sut.perform({ companyName })
+
+    expect(response).toEqual({ companyName: 'any_name', id: 'any_id' })
   })
 })

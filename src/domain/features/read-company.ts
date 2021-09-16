@@ -7,5 +7,5 @@ export namespace ReadCompany {
     companyName: string
   }
 
-  export type Result = void
+  export type Result = undefined | { companyName: string, id: string }
 }
