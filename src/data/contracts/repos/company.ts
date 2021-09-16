@@ -10,6 +10,18 @@ export namespace LoadCompanyRepository {
   export type Result = { id: string, name: string} | undefined
 }
 
+export namespace LoadCompanyByIdRepository {
+  export type Params = {
+    companyId: string
+  }
+
+  export type Result = { id: string, name: string} | undefined
+}
+
+export interface LoadCompanyByIdRepository {
+  loadById: (params: LoadCompanyByIdRepository.Params) => Promise<LoadCompanyByIdRepository.Result>
+}
+
 export interface CreateCompanyRepository {
   create: (params: CreateCompanyRepository.Params) => Promise<CreateCompanyRepository.Result>
 }
