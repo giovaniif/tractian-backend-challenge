@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { adaptExpressRoute } from '@/infra/http'
-import { makeCreateCompanyController } from '@/main/factories/controllers'
+import { adaptExpressRoute as adapt } from '@/infra/http'
+import { makeCreateCompanyController, makeReadCompanyController } from '@/main/factories/controllers'
 
 export default (router: Router): void => {
-  router.post('/company', adaptExpressRoute(makeCreateCompanyController()))
+  router.post('/company', adapt(makeCreateCompanyController()))
+  router.get('/company/:companyName', adapt(makeReadCompanyController()))
 }
 
