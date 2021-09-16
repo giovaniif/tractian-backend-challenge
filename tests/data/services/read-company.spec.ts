@@ -32,4 +32,10 @@ describe('Read Company Service', () => {
     expect(companyRepo.load).toHaveBeenCalledWith({ companyName })
     expect(companyRepo.load).toHaveBeenCalledTimes(1)
   })
+
+  it('should return undefined if load returns undefined', async () => {
+    const response = await sut.perform({ companyName })
+
+    expect(response).toBeUndefined()
+  })
 })
