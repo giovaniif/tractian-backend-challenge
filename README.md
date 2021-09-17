@@ -5,7 +5,7 @@
   - [x] *Read* Company
   - [x] *Delete* Company
   - [ ] *Update* company
-  - [ ] *List* All
+  - [x] *List* All
 - [ ] **Unit**
   - [ ] *Create* Unit
   - [ ] *Read* Unit
