@@ -7,8 +7,10 @@ export class DeleteCompanyService {
   async perform({ companyId }: DeleteCompany.Params): Promise<DeleteCompany.Result> {
     const companyExists = await this.companyRepo.loadById({ companyId })
 
-    if (companyExists) {
-      await this.companyRepo.delete({ companyId })
+    if (!companyExists) {
+      return undefined
     }
+    
+    await this.companyRepo.delete({ companyId })
   }
 }
