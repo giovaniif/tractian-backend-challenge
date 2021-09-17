@@ -1,6 +1,11 @@
 import { getMongoRepository } from 'typeorm'
 
-import { CreateCompanyRepository, LoadCompanyRepository, LoadCompanyByIdRepository } from '@/data/contracts/repos'
+import { 
+  CreateCompanyRepository,
+  LoadCompanyRepository, 
+  LoadCompanyByIdRepository,
+  DeleteCompanyRepository
+} from '@/data/contracts/repos'
 import { MongoCompany } from '@/infra/entities/mongo-db'
 
 type LoadParams = LoadCompanyRepository.Params
@@ -12,7 +17,10 @@ type LoadByIdResult = LoadCompanyByIdRepository.Result
 type CreateParams = CreateCompanyRepository.Params
 type CreateResult = CreateCompanyRepository.Result
 
-export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCompanyRepository, LoadCompanyByIdRepository  {
+type DeleteParams = DeleteCompanyRepository.Params
+type DeleteResult = DeleteCompanyRepository.Result
+
+export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCompanyRepository, LoadCompanyByIdRepository, DeleteCompanyRepository  {
   async load ({ companyName }: LoadParams): Promise<LoadResult> {
     const repo = getMongoRepository(MongoCompany)
 
@@ -33,10 +41,15 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
     return { id: company.id.toString(), name: company.name }
   }
 
-  async create(params: CreateParams): Promise<CreateResult> {
+  async create (params: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoCompany)
     const company = repo.create({ name: params.companyName })
     await repo.save(company)
     return { id: company.id.toString(), name: company.name }
+  }
+
+  async delete ({ companyId }: DeleteParams): Promise<DeleteResult> {
+    const repo = getMongoRepository(MongoCompany)
+    await repo.deleteOne({ _id: companyId })
   }
 }
