@@ -66,5 +66,16 @@ describe('Company Repository', () => {
       expect(name).toBe('any_name')
     })
   })
+
+  describe('delete', () => {
+    it('should delete company', async () => {
+      const { id } = await sut.create({ companyName: 'any_name' })
+      
+      await sut.delete({ companyId: id })
+      const find = await sut.loadById({ companyId: id })
+
+      expect(find).toBeUndefined()
+    })
+  })
 })
 

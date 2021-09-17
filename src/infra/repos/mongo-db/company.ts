@@ -1,4 +1,5 @@
 import { getMongoRepository } from 'typeorm'
+import { ObjectID } from 'bson'
 
 import { 
   CreateCompanyRepository,
@@ -50,6 +51,8 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
 
   async delete ({ companyId }: DeleteParams): Promise<DeleteResult> {
     const repo = getMongoRepository(MongoCompany)
-    await repo.deleteOne({ _id: companyId })
+    const companyObjectId = new ObjectID(companyId)
+
+    await repo.deleteOne({ _id: companyObjectId })
   }
 }
