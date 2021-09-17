@@ -1,6 +1,7 @@
 import { CreateCompany } from '@/domain/features'
 import { HttpResponse, ok, badRequest } from '@/application/helpers'
 import { Controller } from '@/application/controllers'
+import { RequiredFieldError } from '@/application/errors'
 
 type HttpRequest = {
   companyName: string
@@ -13,8 +14,10 @@ export class CreateCompanyController extends Controller {
     super()
   }
   
-  async perform(httpRequest: HttpRequest): Promise<HttpResponse<Response>> {
-    const result = await this.service.perform({ companyName: httpRequest.companyName })
+  async perform({ companyName }: HttpRequest): Promise<HttpResponse<Response>> {
+    if (!companyName) return badRequest(new RequiredFieldError('companyName'))
+    
+    const result = await this.service.perform({ companyName })
 
     if (result instanceof Error) {
       return badRequest(result)

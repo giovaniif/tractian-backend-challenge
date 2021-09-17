@@ -1,6 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CreateCompanyController } from '@/application/controllers'
+import { RequiredFieldError } from '@/application/errors'
 import { CreateCompany } from '@/domain/features'
 
 describe('Create Company Controller', () => {
@@ -23,6 +24,15 @@ describe('Create Company Controller', () => {
 
     expect(createCompanyService.perform).toHaveBeenCalledWith({ companyName })
     expect(createCompanyService.perform).toHaveBeenCalledTimes(1)
+  })
+
+  it('should return 400 if no company name is provided', async () => {
+    const httpResponse = await sut.handle({ companyName: '' })
+
+    expect(httpResponse).toEqual({
+      statusCode: 400,
+      data: new RequiredFieldError('companyName')
+    })
   })
 
   it('should return 400 if creation fails', async () => {
