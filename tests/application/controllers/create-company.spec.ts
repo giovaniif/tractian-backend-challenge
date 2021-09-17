@@ -1,8 +1,12 @@
 import { mock, MockProxy } from 'jest-mock-extended'
+import { mocked } from 'ts-jest/utils'
 
 import { CreateCompanyController } from '@/application/controllers'
 import { RequiredFieldError } from '@/application/errors'
 import { CreateCompany } from '@/domain/features'
+import { RequiredStringValidator } from '@/application/validations'
+
+jest.mock('@/application/validations/required-string')
 
 describe('Create Company Controller', () => {
   let sut: CreateCompanyController
@@ -26,12 +30,18 @@ describe('Create Company Controller', () => {
     expect(createCompanyService.perform).toHaveBeenCalledTimes(1)
   })
 
-  it('should return 400 if no company name is provided', async () => {
-    const httpResponse = await sut.handle({ companyName: '' })
+  it('should return 400 if validation fails', async () => {
+    const RequiredStringValidatorSpy = jest.fn().mockImplementationOnce(() => ({
+      validate: jest.fn().mockReturnValueOnce(new Error('validation_error'))
+    }))
+    mocked(RequiredStringValidator).mockImplementationOnce(RequiredStringValidatorSpy)
+    
+    const httpResponse = await sut.handle({ companyName })
 
+    expect(RequiredStringValidator).toHaveBeenCalledWith(companyName, 'companyName')
     expect(httpResponse).toEqual({
       statusCode: 400,
-      data: new RequiredFieldError('companyName')
+      data: new Error('validation_error')
     })
   })
 
