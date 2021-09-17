@@ -3,9 +3,9 @@ import { mocked } from 'ts-jest/utils'
 
 import { CreateCompanyController } from '@/application/controllers'
 import { CreateCompany } from '@/domain/features'
-import { RequiredStringValidator } from '@/application/validations'
+import { RequiredStringValidator, ValidationComposite } from '@/application/validations'
 
-jest.mock('@/application/validations/required-string')
+jest.mock('@/application/validations/composite')
 
 describe('Create Company Controller', () => {
   let sut: CreateCompanyController
@@ -30,14 +30,16 @@ describe('Create Company Controller', () => {
   })
 
   it('should return 400 if validation fails', async () => {
-    const RequiredStringValidatorSpy = jest.fn().mockImplementationOnce(() => ({
+    const ValidationCompositeSpy = jest.fn().mockImplementationOnce(() => ({
       validate: jest.fn().mockReturnValueOnce(new Error('validation_error'))
     }))
-    mocked(RequiredStringValidator).mockImplementationOnce(RequiredStringValidatorSpy)
+    mocked(ValidationComposite).mockImplementationOnce(ValidationCompositeSpy)
     
     const httpResponse = await sut.handle({ companyName })
 
-    expect(RequiredStringValidator).toHaveBeenCalledWith(companyName, 'companyName')
+    expect(ValidationComposite).toHaveBeenCalledWith([
+      new RequiredStringValidator(companyName, 'companyName')
+    ])
     expect(httpResponse).toEqual({
       statusCode: 400,
       data: new Error('validation_error')

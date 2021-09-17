@@ -1,7 +1,7 @@
 import { CreateCompany } from '@/domain/features'
 import { HttpResponse, ok, badRequest } from '@/application/helpers'
 import { Controller } from '@/application/controllers'
-import { RequiredStringValidator } from '@/application/validations'
+import { RequiredStringValidator, ValidationComposite } from '@/application/validations'
 
 type HttpRequest = {
   companyName: string
@@ -28,7 +28,7 @@ export class CreateCompanyController extends Controller {
   }
 
   private validate ({ companyName }: HttpRequest): Error | undefined {
-    const validator = new RequiredStringValidator(companyName, 'companyName')
+    const validator = new ValidationComposite([new RequiredStringValidator(companyName, 'companyName')])
     return validator.validate()
   }
 }
