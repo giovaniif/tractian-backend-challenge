@@ -1,7 +1,7 @@
 import { CreateCompany } from '@/domain/features'
 import { HttpResponse, ok, badRequest } from '@/application/helpers'
 import { Controller } from '@/application/controllers'
-import { ValidationBuilder, ValidationComposite } from '@/application/validations'
+import { ValidationBuilder, Validator } from '@/application/validations'
 
 type HttpRequest = {
   companyName: string
@@ -15,9 +15,6 @@ export class CreateCompanyController extends Controller {
   }
   
   async perform(httpRequest: HttpRequest): Promise<HttpResponse<Response>> {
-    const error = this.validate(httpRequest)
-    if (error) return badRequest(error)
-    
     const result = await this.service.perform({ companyName: httpRequest.companyName })
 
     if (result instanceof Error) {
@@ -27,12 +24,12 @@ export class CreateCompanyController extends Controller {
     return ok(result)
   }
 
-  private validate ({ companyName }: HttpRequest): Error | undefined {
+  override buildValidators ({ companyName }: HttpRequest): Validator[] {
     const validators = ValidationBuilder.of({
       value: companyName,
       fieldName: 'companyName'
     }).required().build()
     
-    return new ValidationComposite(validators).validate()
+    return [...validators]
   }
 }

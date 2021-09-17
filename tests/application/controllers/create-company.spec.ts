@@ -1,11 +1,8 @@
 import { mock, MockProxy } from 'jest-mock-extended'
-import { mocked } from 'ts-jest/utils'
 
 import { CreateCompanyController } from '@/application/controllers'
 import { CreateCompany } from '@/domain/features'
-import { RequiredStringValidator, ValidationComposite } from '@/application/validations'
-
-jest.mock('@/application/validations/composite')
+import { RequiredStringValidator } from '@/application/validations'
 
 describe('Create Company Controller', () => {
   let sut: CreateCompanyController
@@ -29,32 +26,10 @@ describe('Create Company Controller', () => {
     expect(createCompanyService.perform).toHaveBeenCalledTimes(1)
   })
 
-  it('should return 400 if validation fails', async () => {
-    const ValidationCompositeSpy = jest.fn().mockImplementationOnce(() => ({
-      validate: jest.fn().mockReturnValueOnce(new Error('validation_error'))
-    }))
-    mocked(ValidationComposite).mockImplementationOnce(ValidationCompositeSpy)
-    
-    const httpResponse = await sut.handle({ companyName })
+  it('should build validators correctly', async () => {
+    const validators = sut.buildValidators({ companyName })
 
-    expect(ValidationComposite).toHaveBeenCalledWith([
-      new RequiredStringValidator(companyName, 'companyName')
-    ])
-    expect(httpResponse).toEqual({
-      statusCode: 400,
-      data: new Error('validation_error')
-    })
-  })
-
-  it('should return 400 if creation fails', async () => {
-    createCompanyService.perform.mockResolvedValueOnce(new Error('any_creation_error'))
-
-    const httpResponse = await sut.handle({ companyName })
-
-    expect(httpResponse).toEqual({
-      statusCode: 400,
-      data: new Error('any_creation_error')
-    })
+    expect(validators).toEqual([ new RequiredStringValidator(companyName, 'companyName')])
   })
 
   it('should return 200 if creation succeeds', async () => {
