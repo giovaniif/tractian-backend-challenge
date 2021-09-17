@@ -3,7 +3,7 @@
 - [ ] **Company**
   - [x] *Create* Company
   - [x] *Read* Company
-  - [ ] *Delete* Company
+  - [x] *Delete* Company
   - [ ] *Update* company
   - [ ] *List* All
 - [ ] **Unit**
