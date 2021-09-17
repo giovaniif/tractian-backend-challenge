@@ -9,7 +9,9 @@ export class ListCompaniesController extends Controller {
     super()
   }
 
-  async perform(): Promise<any> {
-    await this.service.perform()
+  async perform(): Promise<HttpResponse<Response>> {
+    const companies = await this.service.perform()
+
+    return ok(companies)
   }
 }

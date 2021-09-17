@@ -9,6 +9,7 @@ describe('List Companies Controller', () => {
 
   beforeAll(() => {
     listCompaniesService = mock()
+    listCompaniesService.perform.mockResolvedValue([{ companyName: 'any_name', id: 'any_id' }])
   })
 
   beforeEach(() => {
@@ -19,5 +20,14 @@ describe('List Companies Controller', () => {
     await sut.handle()
 
     expect(listCompaniesService.perform).toHaveBeenCalledTimes(1)
+  })
+
+  it('should return 200 with company array', async () => {
+    const httpResponse = await sut.handle()
+
+    expect(httpResponse).toEqual({
+      statusCode: 200,
+      data: [{ companyName: 'any_name', id: 'any_id' }]
+    })
   })
 })
