@@ -33,3 +33,15 @@ export namespace CreateCompanyRepository {
 
   export type Result = { name: string, id: string }
 }
+
+export interface DeleteCompanyRepository {
+  delete: (params: DeleteCompanyRepository.Params) => Promise<DeleteCompanyRepository.Result>
+}
+
+export namespace DeleteCompanyRepository {
+  export type Params = {
+    companyId: string
+  }
+
+  export type Result = void
+}
