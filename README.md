@@ -2,7 +2,7 @@
 
 - [ ] **Company**
   - [x] *Create* Company
-  - [ ] *Read* Company
+  - [x] *Read* Company
   - [ ] *Delete* Company
   - [ ] *Update* company
   - [ ] *List* All
