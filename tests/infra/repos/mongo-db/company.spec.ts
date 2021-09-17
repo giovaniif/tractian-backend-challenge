@@ -32,7 +32,7 @@ describe('Company Repository', () => {
 
       const response = await sut.load({ companyName: 'any_name' })
 
-      expect(response).toEqual({ name: company.name, id: company.id.toString() })
+      expect(response).toEqual({ name: company.name, id: company._id.toString() })
     })
 
     it('should return undefined if company does not exists', async () => {
@@ -47,9 +47,9 @@ describe('Company Repository', () => {
       const company = repo.create({ name: 'any_name', units: [], users: [] })
       await repo.save(company)
 
-      const response = await sut.loadById({ companyId: company.id.toString() })
+      const response = await sut.loadById({ companyId: company._id.toString() })
 
-      expect(response).toEqual({ name: company.name, id: company.id.toString() })
+      expect(response).toEqual({ name: company.name, id: company._id.toString() })
     })
 
     it('should return undefined if company does not exists', async () => {

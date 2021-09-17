@@ -29,24 +29,23 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
     
     if (!company) return undefined
 
-    return { id: company.id.toString(), name: company.name }
+    return { id: company._id.toString(), name: company.name }
   }
 
   async loadById ({ companyId }: LoadByIdParams): Promise<LoadByIdResult> {
     const repo = getMongoRepository(MongoCompany)
-
-    const company = await repo.findOne(companyId)
+    const company = await repo.findOne({ where: { _id: new ObjectID(companyId) } })
     
-    if (!company) return undefined
+    if (company === undefined) return undefined
 
-    return { id: company.id.toString(), name: company.name }
+    return { id: company._id.toString(), name: company.name }
   }
 
   async create (params: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoCompany)
     const company = repo.create({ name: params.companyName })
     await repo.save(company)
-    return { id: company.id.toString(), name: company.name }
+    return { id: company._id.toString(), name: company.name }
   }
 
   async delete ({ companyId }: DeleteParams): Promise<DeleteResult> {
