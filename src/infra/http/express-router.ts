@@ -6,7 +6,7 @@ export const adaptExpressRoute = (controller: Controller): RequestHandler => {
   return async (req: Request, res: Response) => {
     const { statusCode, data } = await controller.handle({ ...req.body, ...req.params })
 
-    if (statusCode === 204) res.status(204).send()
+    if (statusCode === 204) return res.status(204).send()
 
     const json = statusCode === 200 ? data : { error: data.message }
 
