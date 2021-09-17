@@ -42,6 +42,16 @@ describe('Company Repository', () => {
     })
   })
 
+  describe('load all', () => {
+    it('should return all existing companies', async () => {
+      await sut.create({ companyName: 'any_name' })
+
+      const companies = await sut.loadAll()
+
+      expect(companies.length).toBe(1)
+    })
+  })
+
   describe('load by id', () => {
     it('should load company by id', async () => {
       const company = repo.create({ name: 'any_name', units: [], users: [] })

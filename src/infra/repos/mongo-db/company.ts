@@ -15,6 +15,8 @@ type LoadResult = LoadCompanyRepository.Result
 type LoadByIdParams = LoadCompanyByIdRepository.Params
 type LoadByIdResult = LoadCompanyByIdRepository.Result
 
+type LoadAllResult = LoadCompanyRepository.LoadAllResult
+
 type CreateParams = CreateCompanyRepository.Params
 type CreateResult = CreateCompanyRepository.Result
 
@@ -39,6 +41,17 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
     if (company === undefined) return undefined
 
     return { id: company._id.toString(), name: company.name }
+  }
+
+  async loadAll (): Promise<LoadAllResult> {
+    const repo = getMongoRepository(MongoCompany)
+
+    const companies = await repo.find()
+
+    return companies.map(c => ({
+      name: c.name,
+      id: c._id.toString()
+    }))
   }
 
   async create (params: CreateParams): Promise<CreateResult> {

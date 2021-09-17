@@ -1,5 +1,6 @@
 export interface LoadCompanyRepository {
   load: (params: LoadCompanyRepository.Params) => Promise<LoadCompanyRepository.Result>
+  loadAll: () => Promise<LoadCompanyRepository.LoadAllResult>
 }
 
 export namespace LoadCompanyRepository {
@@ -8,6 +9,7 @@ export namespace LoadCompanyRepository {
   }
 
   export type Result = { id: string, name: string} | undefined
+  export type LoadAllResult = Array<{ id: string, name: string }>
 }
 
 export namespace LoadCompanyByIdRepository {
