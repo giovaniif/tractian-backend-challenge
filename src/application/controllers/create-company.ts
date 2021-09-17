@@ -14,15 +14,20 @@ export class CreateCompanyController extends Controller {
     super()
   }
   
-  async perform({ companyName }: HttpRequest): Promise<HttpResponse<Response>> {
-    if (!companyName) return badRequest(new RequiredFieldError('companyName'))
+  async perform(httpRequest: HttpRequest): Promise<HttpResponse<Response>> {
+    const error = this.validate(httpRequest)
+    if (error) return badRequest(error)
     
-    const result = await this.service.perform({ companyName })
+    const result = await this.service.perform({ companyName: httpRequest.companyName })
 
     if (result instanceof Error) {
       return badRequest(result)
     }
 
     return ok(result)
+  }
+
+  private validate ({ companyName }: HttpRequest): Error | undefined {
+    if (!companyName) return new RequiredFieldError('companyName')
   }
 }
