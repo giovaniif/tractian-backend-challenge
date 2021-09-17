@@ -2,13 +2,19 @@ import { ServerError } from '@/application/errors'
 
 export type HttpResponse<T = any> = {
   statusCode: number
-  data: T
+  data?: T
 }
 
 export const ok = <T = any> (data: T): HttpResponse<T> => {
   return {
     statusCode: 200,
     data
+  }
+}
+
+export const noContent = (): HttpResponse => {
+  return {
+    statusCode: 204
   }
 }
 
