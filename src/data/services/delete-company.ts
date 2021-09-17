@@ -12,5 +12,6 @@ export class DeleteCompanyService {
     }
     
     await this.companyRepo.delete({ companyId })
+    return { id: companyExists.id, companyName: companyExists.name }
   }
 }

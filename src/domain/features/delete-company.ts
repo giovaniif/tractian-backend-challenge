@@ -7,5 +7,5 @@ export namespace DeleteCompany {
     companyId: string
   }
 
-  export type Result = void | undefined
+  export type Result = { id: string, companyName: string } | undefined
 }

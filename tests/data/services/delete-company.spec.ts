@@ -40,4 +40,12 @@ describe('Delete Company Service', () => {
 
     expect(result).toBeUndefined()
   })
+
+  it('should return data if company exists', async () => {
+    companyRepo.loadById.mockResolvedValueOnce({ name: 'any_name', id: companyId })
+
+    const result = await sut.perform({ companyId })
+
+    expect(result).toEqual({ companyName: 'any_name', id: companyId })
+  })
 })
