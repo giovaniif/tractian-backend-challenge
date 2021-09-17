@@ -2,7 +2,6 @@ import { mock, MockProxy } from 'jest-mock-extended'
 import { mocked } from 'ts-jest/utils'
 
 import { CreateCompanyController } from '@/application/controllers'
-import { RequiredFieldError } from '@/application/errors'
 import { CreateCompany } from '@/domain/features'
 import { RequiredStringValidator } from '@/application/validations'
 
