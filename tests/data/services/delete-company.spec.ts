@@ -32,4 +32,12 @@ describe('Delete Company Service', () => {
     expect(companyRepo.delete).toHaveBeenCalledWith({ companyId })
     expect(companyRepo.delete).toHaveBeenCalledTimes(1)
   })
+
+  it('should return undefined if company does not exists', async () => {
+    companyRepo.loadById.mockResolvedValueOnce(undefined)
+
+    const result = await sut.perform({ companyId })
+
+    expect(result).toBeUndefined()
+  })
 })
