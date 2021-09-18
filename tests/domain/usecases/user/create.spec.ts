@@ -32,10 +32,10 @@ describe('Create User UseCase', () => {
     expect(result).toEqual(new CompanyNotFoundError())
   })
 
-  it('should call loadByEmail with correct email', async () => {
+  it('should call loadByEmail with correct data', async () => {
     await sut({ companyId: 'valid_id', name: 'any_name', email: 'any_email' })
 
-    expect(userRepo.loadByEmail).toHaveBeenCalledWith({ email: 'any_email' })
+    expect(userRepo.loadByEmail).toHaveBeenCalledWith({ email: 'any_email', companyId: 'valid_id' })
     expect(userRepo.loadByEmail).toHaveBeenCalledTimes(1)
   })
 
