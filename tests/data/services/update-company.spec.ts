@@ -2,7 +2,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { UpdateCompanyService } from '@/data/services'
 import { LoadCompanyByIdRepository, LoadCompanyRepository } from '@/data/contracts/repos'
-import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
+import { InvalidNameError, NameAlreadyInUseError, CompanyNotFoundError } from '@/domain/errors'
 
 describe('Create Company Service', () => {
   let sut: UpdateCompanyService
@@ -27,15 +27,27 @@ describe('Create Company Service', () => {
     expect(error).toEqual(new InvalidNameError())
   })
 
+  it('should return CompanyNotFound if loadById returns undefined', async () => {
+    companyRepo.load.mockResolvedValueOnce({ name: 'any_name', id: 'any_id' })
+    companyRepo.loadById.mockResolvedValueOnce(undefined)
+
+    const result = await sut.perform({ companyName, companyId })
+
+    expect(result).toEqual(new CompanyNotFoundError())
+  })
+  
   it('should call load company with correct params', async () => {
+    companyRepo.loadById.mockResolvedValueOnce({ name: 'any_name', id: 'any_id' })
     await sut.perform({ companyName, companyId })
 
     expect(companyRepo.load).toHaveBeenCalledWith({ companyName })
     expect(companyRepo.load).toHaveBeenCalledTimes(1)
   })
 
+
   it('should return NameAlreadyInUseError if load returns data', async () => {
-    companyRepo.load.mockResolvedValue({ name: 'any_name', id: 'any_id' })
+    companyRepo.load.mockResolvedValueOnce({ name: 'any_name', id: 'any_id' })
+    companyRepo.loadById.mockResolvedValueOnce({ name: 'any_name', id: 'any_id' })
 
     const result = await sut.perform({ companyName, companyId })
 
