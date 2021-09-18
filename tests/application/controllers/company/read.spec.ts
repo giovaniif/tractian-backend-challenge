@@ -1,30 +1,30 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { ReadCompany } from '@/domain/features/company'
+import { ReadCompanyUseCase } from '@/domain/usecases/company'
 import { ReadCompanyController } from '@/application/controllers'
 import { CompanyNotFoundError } from '@/application/errors'
 import { RequiredStringValidator } from '@/application/validations'
 
 describe('Read Company Controller', () => {
   let sut: ReadCompanyController
-  let readCompanyService: MockProxy<ReadCompany>
+  let readCompanyUseCase: MockProxy<ReadCompanyUseCase>
   const companyName = 'any_name'
   const companyId = 'any_id'
 
   beforeAll(() => {
-    readCompanyService = mock()
-    readCompanyService.perform.mockResolvedValue({ companyName, id: companyId  })
+    readCompanyUseCase = mock()
+    readCompanyUseCase.perform.mockResolvedValue({ companyName, id: companyId  })
   })
 
   beforeEach(() => {
-    sut = new ReadCompanyController(readCompanyService)
+    sut = new ReadCompanyController(readCompanyUseCase)
   })
   
-  it('should call read company service with correct params', async () => {
+  it('should call read company usecase with correct params', async () => {
     await sut.handle({ companyId })
 
-    expect(readCompanyService.perform).toHaveBeenCalledWith({ companyId })
-    expect(readCompanyService.perform).toHaveBeenCalledTimes(1)
+    expect(readCompanyUseCase.perform).toHaveBeenCalledWith({ companyId })
+    expect(readCompanyUseCase.perform).toHaveBeenCalledTimes(1)
   })
 
   it('should build validators correctly', async () => {
@@ -40,7 +40,7 @@ describe('Read Company Controller', () => {
   })
 
   it('should return 400 with CompanyNotFound', async () => {
-    readCompanyService.perform.mockResolvedValueOnce(undefined)
+    readCompanyUseCase.perform.mockResolvedValueOnce(undefined)
     const response = await sut.handle({ companyId })
 
     expect(response).toEqual({ statusCode: 400, data: new CompanyNotFoundError() })

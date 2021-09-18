@@ -1,10 +1,8 @@
 import { LoadCompanyRepository } from '@/domain/contracts/repos'
-import { ListCompanies } from '@/domain/features/company'
-
-export class ListCompaniesUseCase implements ListCompanies {
+export class ListCompaniesUseCase {
   constructor(private readonly companyRepo: LoadCompanyRepository) {}
   
-  async perform(): Promise<ListCompanies.Result> {
+  async perform(): Promise<Result> {
     const companies = await this.companyRepo.loadAll()
 
     return companies.map(c => ({
@@ -13,3 +11,5 @@ export class ListCompaniesUseCase implements ListCompanies {
     }))
   }
 }
+
+type Result = { companyName: string, id: string }[]

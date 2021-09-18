@@ -1,25 +1,25 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { ListCompanies } from '@/domain/features/company'
+import { ListCompaniesUseCase } from '@/domain/usecases/company'
 import { ListCompaniesController } from '@/application/controllers'
 
 describe('List Companies Controller', () => {
   let sut: ListCompaniesController
-  let listCompaniesService: MockProxy<ListCompanies>
+  let listCompaniesUseCase: MockProxy<ListCompaniesUseCase>
 
   beforeAll(() => {
-    listCompaniesService = mock()
-    listCompaniesService.perform.mockResolvedValue([{ companyName: 'any_name', id: 'any_id' }])
+    listCompaniesUseCase = mock()
+    listCompaniesUseCase.perform.mockResolvedValue([{ companyName: 'any_name', id: 'any_id' }])
   })
 
   beforeEach(() => {
-    sut = new ListCompaniesController(listCompaniesService)
+    sut = new ListCompaniesController(listCompaniesUseCase)
   })
   
-  it('should call list companies service', async () => {
+  it('should call list companies usecase', async () => {
     await sut.handle()
 
-    expect(listCompaniesService.perform).toHaveBeenCalledTimes(1)
+    expect(listCompaniesUseCase.perform).toHaveBeenCalledTimes(1)
   })
 
   it('should return 200 with company array', async () => {

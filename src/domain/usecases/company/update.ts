@@ -1,13 +1,12 @@
 import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyRepository } from '@/domain/contracts/repos'
 import { CompanyNotFoundError, InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
-import { UpdateCompany } from '@/domain/features/company'
 
-export class UpdateCompanyUseCase implements UpdateCompany {
+export class UpdateCompanyUseCase {
   constructor(
     private readonly companyRepo: LoadCompanyRepository & LoadCompanyByIdRepository & UpdateCompanyRepository
   ) {}
 
-  async perform({ companyName, companyId }: UpdateCompany.Params): Promise<UpdateCompany.Result> {
+  async perform({ companyName, companyId }: Params): Promise<Result> {
     if (companyName.length < 2) return new InvalidNameError()
 
     const companyExists = await this.companyRepo.loadById({ companyId })
@@ -23,3 +22,10 @@ export class UpdateCompanyUseCase implements UpdateCompany {
     }
   }
 }
+
+type Params = {
+  companyName: string
+  companyId: string
+}
+
+type Result = { companyName: string, id: string } | NameAlreadyInUseError | InvalidNameError

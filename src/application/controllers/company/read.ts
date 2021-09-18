@@ -1,6 +1,6 @@
 import { Controller } from '@/application/controllers'
 import { badRequest, HttpResponse, ok } from '@/application/helpers'
-import { ReadCompany } from '@/domain/features/company'
+import { ReadCompanyUseCase } from '@/domain/usecases/company'
 import { CompanyNotFoundError } from '@/application/errors'
 import { ValidationBuilder, Validator } from '@/application/validations'
 
@@ -8,12 +8,12 @@ type Request = { companyId: string }
 type Response = { companyName: string, id: string } | Error
 
 export class ReadCompanyController extends Controller {
-  constructor(private readonly service: ReadCompany) {
+  constructor(private readonly usecase: ReadCompanyUseCase) {
     super()
   }
 
   async perform({ companyId }: Request): Promise<HttpResponse<Response>> {
-    const company = await this.service.perform({ companyId })
+    const company = await this.usecase.perform({ companyId })
 
     if (company) return ok(company)
 

@@ -1,4 +1,4 @@
-import { UpdateCompany } from '@/domain/features/company'
+import { UpdateCompanyUseCase } from '@/domain/usecases/company'
 import { HttpResponse, ok, badRequest } from '@/application/helpers'
 import { Controller } from '@/application/controllers'
 import { ValidationBuilder, Validator } from '@/application/validations'
@@ -11,12 +11,12 @@ type HttpRequest = {
 type Response = Error | { id: string, companyName: string }
 
 export class UpdateCompanyController extends Controller {
-  constructor(private readonly service: UpdateCompany) {
+  constructor(private readonly usecase: UpdateCompanyUseCase) {
     super()
   }
   
   async perform({ companyName, companyId }: HttpRequest): Promise<HttpResponse<Response>> {
-    const result = await this.service.perform({ companyName, companyId })
+    const result = await this.usecase.perform({ companyName, companyId })
 
     if (result instanceof Error) {
       return badRequest(result)

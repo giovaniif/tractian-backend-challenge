@@ -1,29 +1,29 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
 import { UpdateCompanyController } from '@/application/controllers'
-import { UpdateCompany } from '@/domain/features/company'
+import { UpdateCompanyUseCase } from '@/domain/usecases/company'
 import { RequiredStringValidator } from '@/application/validations'
 
 describe('Create Company Controller', () => {
   let sut: UpdateCompanyController
-  let updateCompanyService: MockProxy<UpdateCompany>
+  let updateCompanyUseCase: MockProxy<UpdateCompanyUseCase>
   const companyName = 'any_name'
   const id = 'any_id'
 
   beforeAll(() => {
-    updateCompanyService = mock()
-    updateCompanyService.perform.mockResolvedValue({ companyName, id  })
+    updateCompanyUseCase = mock()
+    updateCompanyUseCase.perform.mockResolvedValue({ companyName, id  })
   })
 
   beforeEach(() => {
-    sut = new UpdateCompanyController(updateCompanyService)
+    sut = new UpdateCompanyController(updateCompanyUseCase)
   })
   
-  it('should call update company service with correct params', async () => {
+  it('should call update company usecase with correct params', async () => {
     await sut.handle({ companyName, companyId: id })
 
-    expect(updateCompanyService.perform).toHaveBeenCalledWith({ companyName, companyId: id })
-    expect(updateCompanyService.perform).toHaveBeenCalledTimes(1)
+    expect(updateCompanyUseCase.perform).toHaveBeenCalledWith({ companyName, companyId: id })
+    expect(updateCompanyUseCase.perform).toHaveBeenCalledTimes(1)
   })
 
   it('should build validators correctly', async () => {
