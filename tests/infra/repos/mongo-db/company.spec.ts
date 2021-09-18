@@ -27,7 +27,7 @@ describe('Company Repository', () => {
 
   describe('load', () => {
     it('should return the company if it exists', async () => {
-      const company = repo.create({ name: 'any_name', units: [], users: [] })
+      const company = repo.create({ name: 'any_name' })
       await repo.save(company)
 
       const response = await sut.load({ companyName: 'any_name' })
@@ -54,7 +54,7 @@ describe('Company Repository', () => {
 
   describe('load by id', () => {
     it('should load company by id', async () => {
-      const company = repo.create({ name: 'any_name', units: [], users: [] })
+      const company = repo.create({ name: 'any_name' })
       await repo.save(company)
 
       const response = await sut.loadById({ companyId: company._id.toString() })

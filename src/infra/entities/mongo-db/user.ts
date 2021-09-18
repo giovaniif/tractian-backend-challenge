@@ -1,10 +1,16 @@
 import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm'
 
-@Entity('companies')
-export class MongoCompany {
+@Entity('users')
+export class MongoUser {
   @ObjectIdColumn()
   _id!: ObjectID
 
   @Column()
   name!: string
+
+  @Column()
+  email!: string[]
+
+  @ObjectIdColumn()
+  companyId!: ObjectID
 }
