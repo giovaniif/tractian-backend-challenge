@@ -1,10 +1,10 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/domain/contracts/repos'
-import { DeleteCompanyUseCase } from '@/domain/usecases/company'
+import { DeleteCompany, setupDeleteCompany } from '@/domain/usecases/company'
 
 describe('Delete Company UseCase', () => {
-  let sut: DeleteCompanyUseCase
+  let sut: DeleteCompany
   let companyId: string
   let companyRepo: MockProxy<LoadCompanyByIdRepository & DeleteCompanyRepository>
 
@@ -14,11 +14,11 @@ describe('Delete Company UseCase', () => {
   })
 
   beforeEach(() => {
-    sut = new DeleteCompanyUseCase(companyRepo)
+    sut = setupDeleteCompany(companyRepo)
   })
 
   it('should call loadById with correct params', async () => {
-    await sut.perform({ companyId })
+    await sut({ companyId })
 
     expect(companyRepo.loadById).toHaveBeenCalledWith({ companyId })
     expect(companyRepo.loadById).toHaveBeenCalledTimes(1)
@@ -27,7 +27,7 @@ describe('Delete Company UseCase', () => {
   it('should call delete if loadById returns data', async () => {
     companyRepo.loadById.mockResolvedValueOnce({ name: 'any_name', id: companyId })
 
-    await sut.perform({ companyId })
+    await sut({ companyId })
 
     expect(companyRepo.delete).toHaveBeenCalledWith({ companyId })
     expect(companyRepo.delete).toHaveBeenCalledTimes(1)
@@ -36,7 +36,7 @@ describe('Delete Company UseCase', () => {
   it('should return undefined if company does not exists', async () => {
     companyRepo.loadById.mockResolvedValueOnce(undefined)
 
-    const result = await sut.perform({ companyId })
+    const result = await sut({ companyId })
 
     expect(result).toBeUndefined()
   })
@@ -44,7 +44,7 @@ describe('Delete Company UseCase', () => {
   it('should return data if company exists', async () => {
     companyRepo.loadById.mockResolvedValueOnce({ name: 'any_name', id: companyId })
 
-    const result = await sut.perform({ companyId })
+    const result = await sut({ companyId })
 
     expect(result).toEqual({ companyName: 'any_name', id: companyId })
   })

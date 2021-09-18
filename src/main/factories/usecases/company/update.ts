@@ -1,4 +1,4 @@
-import { UpdateCompanyUseCase } from '@/domain/usecases/company'
+import { UpdateCompany, setupUpdateCompany } from '@/domain/usecases/company'
 import { makeMongoDBCompanyRepo } from '@/main/factories/repos'
 
-export const makeUpdateCompanyUseCase = (): UpdateCompanyUseCase => new UpdateCompanyUseCase(makeMongoDBCompanyRepo())
+export const makeUpdateCompanyUseCase = (): UpdateCompany => setupUpdateCompany(makeMongoDBCompanyRepo())

@@ -1,22 +1,20 @@
 import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/domain/contracts/repos'
 
-export class DeleteCompanyUseCase {
-  constructor(private readonly companyRepo: LoadCompanyByIdRepository & DeleteCompanyRepository) {}
+type Params = { companyId: string }
+type Result = { id: string, companyName: string } | undefined
 
-  async perform({ companyId }: Params): Promise<Result> {
-    const companyExists = await this.companyRepo.loadById({ companyId })
+export type DeleteCompany = (params: Params) => Promise<Result>
+type Setup = (companyRepo: LoadCompanyByIdRepository & DeleteCompanyRepository) => DeleteCompany
+
+export const setupDeleteCompany: Setup = (companyRepo) => {
+  return async ({ companyId }) => {
+    const companyExists = await companyRepo.loadById({ companyId })
 
     if (!companyExists) {
       return undefined
     }
     
-    await this.companyRepo.delete({ companyId })
+    await companyRepo.delete({ companyId })
     return { id: companyExists.id, companyName: companyExists.name }
   }
 }
-
-type Params = {
-  companyId: string
-}
-
-type Result = { id: string, companyName: string } | undefined

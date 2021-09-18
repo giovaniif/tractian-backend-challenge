@@ -1,17 +1,15 @@
 import { LoadCompanyByIdRepository } from '@/domain/contracts/repos'
 
-export class ReadCompanyUseCase {
-  constructor(private readonly companyRepo: LoadCompanyByIdRepository) {}
+type Params = { companyId: string }
+type Result = undefined | { companyName: string, id: string }
 
-  async perform({ companyId }: Params): Promise<Result> {
-    const company = await this.companyRepo.loadById({ companyId })
+export type ReadCompany = (params: Params) => Promise<Result>
+type Setup = (companyRepo: LoadCompanyByIdRepository) => ReadCompany
+
+export const setupReadCompany: Setup = (companyRepo) => {
+  return async ({ companyId }) => {
+    const company = await companyRepo.loadById({ companyId })
 
     if (company) return { companyName: company.name, id: company.id }
   }
 }
-
-export type Params = {
-  companyId: string
-}
-
-export type Result = undefined | { companyName: string, id: string }
