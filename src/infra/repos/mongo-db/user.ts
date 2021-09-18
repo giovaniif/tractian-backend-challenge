@@ -1,6 +1,6 @@
 import { getMongoRepository } from 'typeorm'
 
-import { CreateUserRepository, LoadUserByEmailRepository } from '@/domain/contracts/repos'
+import { CreateUserRepository, LoadUserByEmailRepository, LoadUserFromCompanyRepository } from '@/domain/contracts/repos'
 import { MongoUser } from '@/infra/entities/mongo-db/user'
 
 type CreateParams = CreateUserRepository.Params
@@ -9,7 +9,10 @@ type CreateResult = CreateUserRepository.Result
 type LoadByEmailParams = LoadUserByEmailRepository.Params
 type LoadByEmailResult = LoadUserByEmailRepository.Result
 
-export class MongoDBUserRepository implements CreateUserRepository, LoadUserByEmailRepository {
+type LoadFromCompanyParams = LoadUserFromCompanyRepository.Params
+type LoadFromCompanyResult = LoadUserFromCompanyRepository.Result
+
+export class MongoDBUserRepository implements CreateUserRepository, LoadUserByEmailRepository, LoadUserFromCompanyRepository {
   async create({ email, name, companyId }: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoUser)
 
@@ -27,5 +30,17 @@ export class MongoDBUserRepository implements CreateUserRepository, LoadUserByEm
     if (user) {
       return { email: user.email, name: user.name, id: user._id.toString() }
     }
+  }
+
+  async load({ companyId }: LoadFromCompanyParams): Promise<LoadFromCompanyResult> {
+    const repo = getMongoRepository(MongoUser)
+
+    const users = await repo.find({ where: { companyId } })
+
+    return users.map(user => ({
+      email: user.email,
+      name: user.name,
+      id: user._id.toString()
+    }))
   }
 }

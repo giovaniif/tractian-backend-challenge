@@ -50,4 +50,14 @@ describe('MongoDB User Repo', () => {
       expect(result?.name).toBe('any_name')
     })
   })
+
+  describe('load from company', () => {
+    it('should return users', async () => {
+      await sut.create({ email: 'any_email', name: 'any_name', companyId: 'any_id' })
+      
+      const result = await sut.load({ companyId: 'any_id' })
+
+      expect(result.length).toBe(1)
+    })
+  })
 })
