@@ -17,7 +17,7 @@ export namespace CreateUserRepository {
     companyId: string
   }
 
-  export type Result = { id: string, name: string, email: string } | undefined
+  export type Result = { id: string, name: string, email: string }
 }
 
 export interface CreateUserRepository {

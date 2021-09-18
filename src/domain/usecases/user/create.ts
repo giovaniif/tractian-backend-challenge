@@ -1,7 +1,7 @@
 import { CreateUserRepository, LoadCompanyByIdRepository, LoadUserByEmailRepository } from '@/domain/contracts/repos'
 import { CompanyNotFoundError, EmailAlreadyInUseError } from '@/domain/errors'
 
-type Result = CompanyNotFoundError | EmailAlreadyInUseError | undefined
+type Result = CompanyNotFoundError | EmailAlreadyInUseError | { name: string, email: string, id: string }
 type Params = { name: string, email: string, companyId: string }
 
 export type CreateUser = (params: Params) => Promise<Result>
@@ -12,9 +12,9 @@ export const setupCreateUser: Setup = (companyRepo, userRepo) => {
     const company = await companyRepo.loadById({ companyId })
     if (!company) return new CompanyNotFoundError()
 
-    const user = await userRepo.loadByEmail({ email })
-    if (user) return new EmailAlreadyInUseError()
+    const userExists = await userRepo.loadByEmail({ email })
+    if (userExists) return new EmailAlreadyInUseError()
 
-    await userRepo.create({ companyId, email, name })
+    return userRepo.create({ companyId, email, name })
   }
 }

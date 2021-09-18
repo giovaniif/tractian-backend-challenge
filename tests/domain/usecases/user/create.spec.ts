@@ -53,4 +53,12 @@ describe('Create User UseCase', () => {
     expect(userRepo.create).toHaveBeenCalledWith({ companyId: 'valid_id', name: 'any_name', email: 'valid_email' })
     expect(userRepo.create).toHaveBeenCalledTimes(1)
   })
+
+  it('should return the user if creation succeeds', async () => {
+    userRepo.create.mockResolvedValue({ name: 'any_name', id: 'any_id', email: 'valid_email' })
+    
+    const result = await sut({ companyId: 'company_id', name: 'valid_name', email: 'valid_email' })
+
+    expect(result).toEqual({ name: 'any_name', id: 'any_id', email: 'valid_email' })
+  })
 })
