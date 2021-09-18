@@ -2,7 +2,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CreateUser, setupCreateUser } from '@/domain/usecases/user'
 import { LoadCompanyByIdRepository, LoadUserByEmailRepository } from '@/domain/contracts/repos'
-import { CompanyNotFoundError } from '@/domain/errors'
+import { CompanyNotFoundError, EmailAlreadyInUseError } from '@/domain/errors'
 
 describe('Create User UseCase', () => {
   let sut: CreateUser
@@ -11,7 +11,9 @@ describe('Create User UseCase', () => {
 
   beforeEach(() => {
     companyRepo = mock()
+    companyRepo.loadById.mockResolvedValue({ name: 'any_name', id: 'any_id' })
     userRepo = mock()
+    userRepo.loadByEmail.mockResolvedValue(undefined)
     sut = setupCreateUser(companyRepo, userRepo)
   })
 
@@ -31,11 +33,17 @@ describe('Create User UseCase', () => {
   })
 
   it('should call loadByEmail with correct email', async () => {
-    companyRepo.loadById.mockResolvedValueOnce({ name: 'any_name', id: 'any_id' })
-    
     await sut({ companyId: 'valid_id', name: 'any_name', email: 'any_email' })
 
     expect(userRepo.loadByEmail).toHaveBeenCalledWith({ email: 'any_email' })
     expect(userRepo.loadByEmail).toHaveBeenCalledTimes(1)
+  })
+
+  it('should return EmailAlreadyInUse if loadByEmail returns data', async () => {
+    userRepo.loadByEmail.mockResolvedValueOnce({ name: 'any_name', email: 'any_email', id: 'any_id' })
+
+    const result = await sut({ companyId: 'valid_id', name: 'any_name', email: 'in_use_email' })
+
+    expect(result).toEqual(new EmailAlreadyInUseError())
   })
 })
