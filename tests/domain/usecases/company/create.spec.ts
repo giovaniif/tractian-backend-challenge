@@ -1,11 +1,11 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CreateCompanyRepository, LoadCompanyRepository } from '@/domain/contracts/repos'
-import { CreateCompanyService } from '@/domain/services/company'
+import { CreateCompanyUseCase } from '@/domain/usecases/company'
 import { NameAlreadyInUseError, InvalidNameError } from '@/domain/errors'
 
-describe('Create Company Service', () => {
-  let sut: CreateCompanyService
+describe('Create Company UseCase', () => {
+  let sut: CreateCompanyUseCase
   let companyName: string
   let companyRepo: MockProxy<CreateCompanyRepository & LoadCompanyRepository>
 
@@ -17,7 +17,7 @@ describe('Create Company Service', () => {
   })
 
   beforeEach(() => {
-    sut = new CreateCompanyService(companyRepo)
+    sut = new CreateCompanyUseCase(companyRepo)
   })
 
   it('should call load company with correct params', async () => {

@@ -2,7 +2,7 @@ import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyReposito
 import { CompanyNotFoundError, InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 import { UpdateCompany } from '@/domain/features/company'
 
-export class UpdateCompanyService implements UpdateCompany {
+export class UpdateCompanyUseCase implements UpdateCompany {
   constructor(
     private readonly companyRepo: LoadCompanyRepository & LoadCompanyByIdRepository & UpdateCompanyRepository
   ) {}

@@ -2,7 +2,7 @@ import { CreateCompanyRepository, LoadCompanyRepository } from '@/domain/contrac
 import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 import { CreateCompany } from '@/domain/features/company'
 
-export class CreateCompanyService implements CreateCompany {
+export class CreateCompanyUseCase implements CreateCompany {
   constructor(private readonly companyRepo: CreateCompanyRepository & LoadCompanyRepository) {}
 
   async perform(params: CreateCompany.Params): Promise<CreateCompany.Result> {

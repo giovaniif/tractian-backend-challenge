@@ -1,7 +1,7 @@
 import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/domain/contracts/repos'
 import { DeleteCompany } from '@/domain/features/company'
 
-export class DeleteCompanyService {
+export class DeleteCompanyUseCase {
   constructor(private readonly companyRepo: LoadCompanyByIdRepository & DeleteCompanyRepository) {}
 
   async perform({ companyId }: DeleteCompany.Params): Promise<DeleteCompany.Result> {

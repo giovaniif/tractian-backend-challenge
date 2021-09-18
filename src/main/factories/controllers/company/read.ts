@@ -1,4 +1,4 @@
 import { ReadCompanyController } from '@/application/controllers'
-import { makeReadCompanyService } from '@/main/factories/services/company'
+import { makeReadCompanyUseCase } from '@/main/factories/usecases/company'
 
-export const makeReadCompanyController = (): ReadCompanyController => new ReadCompanyController(makeReadCompanyService())
+export const makeReadCompanyController = (): ReadCompanyController => new ReadCompanyController(makeReadCompanyUseCase())

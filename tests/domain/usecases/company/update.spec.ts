@@ -1,11 +1,11 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { UpdateCompanyService } from '@/domain/services/company'
+import { UpdateCompanyUseCase } from '@/domain/usecases/company'
 import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyRepository } from '@/domain/contracts/repos'
 import { InvalidNameError, NameAlreadyInUseError, CompanyNotFoundError } from '@/domain/errors'
 
-describe('Create Company Service', () => {
-  let sut: UpdateCompanyService
+describe('Update Company UseCase', () => {
+  let sut: UpdateCompanyUseCase
   let companyName: string
   let companyId: string
   let companyRepo: MockProxy<LoadCompanyByIdRepository & LoadCompanyRepository & UpdateCompanyRepository>
@@ -19,7 +19,7 @@ describe('Create Company Service', () => {
   })
 
   beforeEach(() => {
-    sut = new UpdateCompanyService(companyRepo)
+    sut = new UpdateCompanyUseCase(companyRepo)
   })
 
   it('should return an InvalidNameError if the name length is smaller than 2', async () => {

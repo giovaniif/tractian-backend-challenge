@@ -1,11 +1,10 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadCompanyRepository } from '@/domain/contracts/repos'
-import { ListCompaniesService } from '@/domain/services/company'
+import { ListCompaniesUseCase } from '@/domain/usecases/company'
 
-
-describe('List Companies Service', () => {
-  let sut: ListCompaniesService
+describe('List Companies UseCase', () => {
+  let sut: ListCompaniesUseCase
   let companyRepo: MockProxy<LoadCompanyRepository>
 
   beforeAll(() => {
@@ -14,7 +13,7 @@ describe('List Companies Service', () => {
   })
 
   beforeEach(() => {
-    sut = new ListCompaniesService(companyRepo)
+    sut = new ListCompaniesUseCase(companyRepo)
   })
 
   it('should call loadAll', async () => {

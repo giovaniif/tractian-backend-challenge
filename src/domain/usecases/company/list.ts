@@ -1,7 +1,7 @@
 import { LoadCompanyRepository } from '@/domain/contracts/repos'
 import { ListCompanies } from '@/domain/features/company'
 
-export class ListCompaniesService implements ListCompanies {
+export class ListCompaniesUseCase implements ListCompanies {
   constructor(private readonly companyRepo: LoadCompanyRepository) {}
   
   async perform(): Promise<ListCompanies.Result> {

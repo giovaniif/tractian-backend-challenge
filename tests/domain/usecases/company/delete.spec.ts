@@ -1,10 +1,10 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/domain/contracts/repos'
-import { DeleteCompanyService } from '@/domain/services/company'
+import { DeleteCompanyUseCase } from '@/domain/usecases/company'
 
-describe('Delete Company Service', () => {
-  let sut: DeleteCompanyService
+describe('Delete Company UseCase', () => {
+  let sut: DeleteCompanyUseCase
   let companyId: string
   let companyRepo: MockProxy<LoadCompanyByIdRepository & DeleteCompanyRepository>
 
@@ -14,7 +14,7 @@ describe('Delete Company Service', () => {
   })
 
   beforeEach(() => {
-    sut = new DeleteCompanyService(companyRepo)
+    sut = new DeleteCompanyUseCase(companyRepo)
   })
 
   it('should call loadById with correct params', async () => {

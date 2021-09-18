@@ -1,11 +1,10 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadCompanyByIdRepository } from '@/domain/contracts/repos'
-import { ReadCompanyService } from '@/domain/services/company'
+import { ReadCompanyUseCase } from '@/domain/usecases/company'
 
-
-describe('Read Company Service', () => {
-  let sut: ReadCompanyService
+describe('Read Company UseCase', () => {
+  let sut: ReadCompanyUseCase
   let companyId: string
   let companyRepo: MockProxy<LoadCompanyByIdRepository>
 
@@ -16,7 +15,7 @@ describe('Read Company Service', () => {
   })
 
   beforeEach(() => {
-    sut = new ReadCompanyService(companyRepo)
+    sut = new ReadCompanyUseCase(companyRepo)
   })
 
   it('should call loadById company with correct params', async () => {

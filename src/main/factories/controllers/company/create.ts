@@ -1,4 +1,4 @@
 import { CreateCompanyController } from '@/application/controllers'
-import { makeCreateCompanyService } from '@/main/factories/services/company'
+import { makeCreateCompanyUseCase } from '@/main/factories/usecases/company'
 
-export const makeCreateCompanyController = (): CreateCompanyController => new CreateCompanyController(makeCreateCompanyService())
+export const makeCreateCompanyController = (): CreateCompanyController => new CreateCompanyController(makeCreateCompanyUseCase())

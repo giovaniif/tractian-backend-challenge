@@ -1,4 +1,4 @@
 import { UpdateCompanyController } from '@/application/controllers'
-import { makeUpdateCompanyService } from '@/main/factories/services/company'
+import { makeUpdateCompanyUseCase } from '@/main/factories/usecases/company'
 
-export const makeUpdatedCompanyController = (): UpdateCompanyController => new UpdateCompanyController(makeUpdateCompanyService())
+export const makeUpdatedCompanyController = (): UpdateCompanyController => new UpdateCompanyController(makeUpdateCompanyUseCase())
