@@ -12,7 +12,7 @@ export const setupCreateUser: Setup = (companyRepo, userRepo) => {
     const company = await companyRepo.loadById({ companyId })
     if (!company) return new CompanyNotFoundError()
 
-    const userExists = await userRepo.loadByEmail({ email, companyId })
+    const userExists = await userRepo.loadByEmail({ email })
     if (userExists) return new EmailAlreadyInUseError()
 
     return userRepo.create({ companyId, email, name })

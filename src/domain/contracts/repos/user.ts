@@ -1,5 +1,7 @@
 export namespace LoadUserByEmailRepository {
-  export type Params = { email: string, companyId: string }
+  export type Params = {
+    email: string
+  }
 
   export type Result = { id: string, name: string, email: string } | undefined
 }
