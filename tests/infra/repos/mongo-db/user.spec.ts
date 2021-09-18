@@ -40,5 +40,14 @@ describe('MongoDB User Repo', () => {
 
       expect(result).toBeUndefined()
     })
+
+    it('should return user if it exists', async () => {
+      await sut.create({ companyId: 'any_id', email: 'any_email', name: 'any_name' })
+
+      const result = await sut.loadByEmail({ email: 'any_email' })
+
+      expect(result?.email).toBe('any_email')
+      expect(result?.name).toBe('any_name')
+    })
   })
 })

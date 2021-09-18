@@ -19,7 +19,13 @@ export class MongoDBUserRepository implements CreateUserRepository, LoadUserByEm
     return { name: user.name, email: user.email, id: user._id.toString() }
   }
 
-  async loadByEmail({}: LoadByEmailParams): Promise<LoadByEmailResult> {
-    return undefined
+  async loadByEmail({ email }: LoadByEmailParams): Promise<LoadByEmailResult> {
+    const repo = getMongoRepository(MongoUser)
+
+    const user = await repo.findOne({ where: { email } })
+    
+    if (user) {
+      return { email: user.email, name: user.name, id: user._id.toString() }
+    }
   }
 }
