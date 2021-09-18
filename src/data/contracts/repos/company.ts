@@ -47,3 +47,16 @@ export namespace DeleteCompanyRepository {
 
   export type Result = void
 }
+
+export interface UpdateCompanyRepository {
+  updateName: (params: UpdateCompanyRepository.Params) => Promise<UpdateCompanyRepository.Result>
+}
+
+export namespace UpdateCompanyRepository {
+  export type Params = {
+    companyId: string
+    companyName: string
+  }
+
+  export type Result = { name: string, id: string }
+}
