@@ -6,7 +6,7 @@ import {
   makeDeleteCompanyController, 
   makeListCompaniesController,
   makeUpdatedCompanyController
-} from '@/main/factories/controllers'
+} from '@/main/factories/controllers/company'
 
 export default (router: Router): void => {
   router.post('/company', adapt(makeCreateCompanyController()))
