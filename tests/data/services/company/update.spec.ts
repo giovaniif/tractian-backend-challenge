@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { UpdateCompanyService } from '@/data/services'
+import { UpdateCompanyService } from '@/data/services/company'
 import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyRepository } from '@/data/contracts/repos'
 import { InvalidNameError, NameAlreadyInUseError, CompanyNotFoundError } from '@/domain/errors'
 

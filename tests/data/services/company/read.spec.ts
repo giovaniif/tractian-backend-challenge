@@ -1,7 +1,7 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadCompanyByIdRepository } from '@/data/contracts/repos'
-import { ReadCompanyService } from '@/data/services'
+import { ReadCompanyService } from '@/data/services/company'
 
 
 describe('Read Company Service', () => {
