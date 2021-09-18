@@ -1,5 +1,5 @@
 import { LoadCompanyRepository } from '@/data/contracts/repos'
-import { ListCompanies } from '@/domain/features/list-companies'
+import { ListCompanies } from '@/domain/features/company'
 
 export class ListCompaniesService implements ListCompanies {
   constructor(private readonly companyRepo: LoadCompanyRepository) {}

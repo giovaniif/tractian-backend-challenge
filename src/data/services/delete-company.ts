@@ -1,5 +1,5 @@
 import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/data/contracts/repos'
-import { DeleteCompany } from '@/domain/features/delete-company'
+import { DeleteCompany } from '@/domain/features/company'
 
 export class DeleteCompanyService {
   constructor(private readonly companyRepo: LoadCompanyByIdRepository & DeleteCompanyRepository) {}

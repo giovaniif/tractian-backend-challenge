@@ -1,6 +1,6 @@
 import { Controller } from '@/application/controllers'
 import { badRequest, HttpResponse, noContent } from '@/application/helpers'
-import { DeleteCompany } from '@/domain/features/delete-company'
+import { DeleteCompany } from '@/domain/features/company'
 import { CompanyNotFoundError } from '@/application/errors'
 
 type Request = { companyId: string }

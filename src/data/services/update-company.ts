@@ -1,6 +1,6 @@
 import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyRepository } from '@/data/contracts/repos'
 import { CompanyNotFoundError, InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
-import { UpdateCompany } from '@/domain/features/update-company'
+import { UpdateCompany } from '@/domain/features/company'
 
 export class UpdateCompanyService implements UpdateCompany {
   constructor(

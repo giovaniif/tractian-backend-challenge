@@ -1,6 +1,6 @@
 import { CreateCompanyRepository, LoadCompanyRepository } from '@/data/contracts/repos'
 import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
-import { CreateCompany } from '@/domain/features'
+import { CreateCompany } from '@/domain/features/company'
 
 export class CreateCompanyService implements CreateCompany {
   constructor(private readonly companyRepo: CreateCompanyRepository & LoadCompanyRepository) {}

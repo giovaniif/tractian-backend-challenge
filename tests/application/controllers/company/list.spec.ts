@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { ListCompanies } from '@/domain/features/list-companies'
+import { ListCompanies } from '@/domain/features/company'
 import { ListCompaniesController } from '@/application/controllers'
 
 describe('List Companies Controller', () => {

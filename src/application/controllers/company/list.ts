@@ -1,6 +1,6 @@
 import { Controller } from '@/application/controllers'
 import { HttpResponse, ok } from '@/application/helpers'
-import { ListCompanies } from '@/domain/features/list-companies'
+import { ListCompanies } from '@/domain/features/company'
 
 type Response = Array<{ id: string, companyName: string }>
 

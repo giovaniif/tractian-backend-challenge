@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { ReadCompany } from '@/domain/features/read-company'
+import { ReadCompany } from '@/domain/features/company'
 import { ReadCompanyController } from '@/application/controllers'
 import { CompanyNotFoundError } from '@/application/errors'
 import { RequiredStringValidator } from '@/application/validations'

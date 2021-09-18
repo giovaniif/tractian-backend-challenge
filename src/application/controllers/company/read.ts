@@ -1,6 +1,6 @@
 import { Controller } from '@/application/controllers'
 import { badRequest, HttpResponse, ok } from '@/application/helpers'
-import { ReadCompany } from '@/domain/features/read-company'
+import { ReadCompany } from '@/domain/features/company'
 import { CompanyNotFoundError } from '@/application/errors'
 import { ValidationBuilder, Validator } from '@/application/validations'
 

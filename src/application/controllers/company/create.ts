@@ -1,4 +1,4 @@
-import { CreateCompany } from '@/domain/features'
+import { CreateCompany } from '@/domain/features/company'
 import { HttpResponse, ok, badRequest } from '@/application/helpers'
 import { Controller } from '@/application/controllers'
 import { ValidationBuilder, Validator } from '@/application/validations'

@@ -1,5 +1,5 @@
 import { LoadCompanyByIdRepository } from '@/data/contracts/repos'
-import { ReadCompany } from '@/domain/features/read-company'
+import { ReadCompany } from '@/domain/features/company'
 
 export class ReadCompanyService {
   constructor(private readonly companyRepo: LoadCompanyByIdRepository) {}

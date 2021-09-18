@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { DeleteCompany } from '@/domain/features/delete-company'
+import { DeleteCompany } from '@/domain/features/company'
 import { DeleteCompanyController } from '@/application/controllers'
 import { CompanyNotFoundError } from '@/application/errors'
 

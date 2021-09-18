@@ -1,7 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
 import { UpdateCompanyController } from '@/application/controllers'
-import { UpdateCompany } from '@/domain/features/update-company'
+import { UpdateCompany } from '@/domain/features/company'
 import { RequiredStringValidator } from '@/application/validations'
 
 describe('Create Company Controller', () => {
