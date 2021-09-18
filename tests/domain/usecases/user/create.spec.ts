@@ -1,13 +1,13 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CreateUser, setupCreateUser } from '@/domain/usecases/user'
-import { LoadCompanyByIdRepository, LoadUserByEmailRepository } from '@/domain/contracts/repos'
+import { LoadCompanyByIdRepository, LoadUserByEmailRepository, CreateUserRepository } from '@/domain/contracts/repos'
 import { CompanyNotFoundError, EmailAlreadyInUseError } from '@/domain/errors'
 
 describe('Create User UseCase', () => {
   let sut: CreateUser
   let companyRepo: MockProxy<LoadCompanyByIdRepository>
-  let userRepo: MockProxy<LoadUserByEmailRepository>
+  let userRepo: MockProxy<LoadUserByEmailRepository & CreateUserRepository>
 
   beforeEach(() => {
     companyRepo = mock()
@@ -45,5 +45,12 @@ describe('Create User UseCase', () => {
     const result = await sut({ companyId: 'valid_id', name: 'any_name', email: 'in_use_email' })
 
     expect(result).toEqual(new EmailAlreadyInUseError())
+  })
+
+  it('should call create with correct data', async () => {
+    await sut({ companyId: 'valid_id', name: 'any_name', email: 'valid_email' })
+
+    expect(userRepo.create).toHaveBeenCalledWith({ companyId: 'valid_id', name: 'any_name', email: 'valid_email' })
+    expect(userRepo.create).toHaveBeenCalledTimes(1)
   })
 })
