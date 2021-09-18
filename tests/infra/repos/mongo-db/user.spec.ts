@@ -33,4 +33,12 @@ describe('MongoDB User Repo', () => {
       expect(user.email).toBe('any_email')
     })
   })
+
+  describe('loadByEmail', () => {
+    it('should return undefined if user does not exist', async () => {
+      const result = await sut.loadByEmail({ email: 'not_existing_email' })
+
+      expect(result).toBeUndefined()
+    })
+  })
 })
