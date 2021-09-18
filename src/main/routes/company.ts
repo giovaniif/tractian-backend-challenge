@@ -4,7 +4,8 @@ import {
   makeCreateCompanyController, 
   makeReadCompanyController, 
   makeDeleteCompanyController, 
-  makeListCompaniesController 
+  makeListCompaniesController,
+  makeUpdatedCompanyController
 } from '@/main/factories/controllers'
 
 export default (router: Router): void => {
@@ -12,5 +13,6 @@ export default (router: Router): void => {
   router.get('/company/:companyId', adapt(makeReadCompanyController()))
   router.delete('/company/:companyId', adapt(makeDeleteCompanyController()))
   router.get('/company', adapt(makeListCompaniesController()))
+  router.put('/company/:companyId', adapt(makeUpdatedCompanyController()))
 }
 
