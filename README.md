@@ -1,6 +1,6 @@
 ### ToDo
 
-- [ ] **Company**
+- [x] **Company**
   - [x] *Create* Company
   - [x] *Read* Company
   - [x] *Delete* Company
