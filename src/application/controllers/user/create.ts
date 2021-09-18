@@ -18,18 +18,27 @@ export class CreateUserController extends Controller {
   
   async perform({ companyId, name, email }: HttpRequest): Promise<HttpResponse<Response>> {
     const result = await this.createUser({ companyId, name, email })
-
     if (result instanceof Error) return badRequest(result)
-
+    
     return ok(result)
   }
 
-  // override buildValidators ({ companyId }: HttpRequest): Validator[] {
-  //   const validators = ValidationBuilder.of({
-  //     value: companyId,
-  //     fieldName: 'companyId'
-  //   }).required().build()
+  override buildValidators ({ companyId, name, email }: HttpRequest): Validator[] {
+    const validators = [
+      ...ValidationBuilder.of({
+        value: companyId,
+        fieldName: 'companyId'
+      }).required().build(),
+      ...ValidationBuilder.of({
+        value: name,
+        fieldName: 'name'
+      }).required().build(),
+      ...ValidationBuilder.of({
+        value: email,
+        fieldName: 'email'
+      }).required().email().build()
+    ]
     
-  //   return [...validators]
-  // }
+    return [...validators]
+  }
 }
