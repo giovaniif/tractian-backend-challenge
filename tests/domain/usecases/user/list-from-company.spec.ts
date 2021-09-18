@@ -18,4 +18,12 @@ describe('list from company use case', () => {
     expect(userRepo.load).toHaveBeenCalledTimes(1)
     expect(userRepo.load).toHaveBeenCalledWith({ companyId: 'any_id' })
   })
+
+  it('should return same result as repo', async () => {
+    userRepo.load.mockResolvedValueOnce([{ id: 'any_id', name: 'any_name', email: 'any_email' }])
+    
+    const result = await sut({ companyId: 'any_id' })
+
+    expect(result).toEqual([{ id: 'any_id', name: 'any_name', email: 'any_email' }])
+  })
 })

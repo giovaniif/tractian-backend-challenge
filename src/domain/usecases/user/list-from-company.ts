@@ -7,9 +7,5 @@ export type ListUsers = (params: Params) => Promise<Result>
 type Setup = (userRepo: LoadUserFromCompanyRepository) => ListUsers
 
 export const setupListUsers: Setup = (userRepo) => {
-  return async ({ companyId }) => {
-    await userRepo.load({ companyId })
-
-    return []
-  }
+  return async ({ companyId }) => userRepo.load({ companyId })
 } 
