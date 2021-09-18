@@ -37,4 +37,13 @@ describe('Create User Controller', () => {
       data: new Error('any_error')
     })
   })
+
+  it('should return 200 if usecase performs', async () => {
+    const response = await sut.handle({ companyId: 'any_id', name: 'any_name', email: 'any_email' })
+
+    expect(response).toEqual({
+      statusCode: 200,
+      data: { id: 'user_id', name: 'user_name', email: 'user_name'  }
+    })
+  })
 })
