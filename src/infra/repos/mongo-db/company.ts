@@ -5,8 +5,10 @@ import {
   CreateCompanyRepository,
   LoadCompanyRepository, 
   LoadCompanyByIdRepository,
-  DeleteCompanyRepository
+  DeleteCompanyRepository,
+  UpdateCompanyRepository,
 } from '@/data/contracts/repos'
+
 import { MongoCompany } from '@/infra/entities/mongo-db'
 
 type LoadParams = LoadCompanyRepository.Params
@@ -23,7 +25,10 @@ type CreateResult = CreateCompanyRepository.Result
 type DeleteParams = DeleteCompanyRepository.Params
 type DeleteResult = DeleteCompanyRepository.Result
 
-export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCompanyRepository, LoadCompanyByIdRepository, DeleteCompanyRepository  {
+type UpdateParams = UpdateCompanyRepository.Params
+type UpdateResult = UpdateCompanyRepository.Result
+
+export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCompanyRepository, LoadCompanyByIdRepository, DeleteCompanyRepository, UpdateCompanyRepository  {
   async load ({ companyName }: LoadParams): Promise<LoadResult> {
     const repo = getMongoRepository(MongoCompany)
 
@@ -66,5 +71,21 @@ export class MongoDBCompanyRepository implements CreateCompanyRepository, LoadCo
     const companyObjectId = new ObjectID(companyId)
 
     await repo.deleteOne({ _id: companyObjectId })
+  }
+
+  async updateName ({ companyId, companyName }: UpdateParams): Promise<UpdateResult> {
+    const repo = getMongoRepository(MongoCompany)
+    const companyObjectId = new ObjectID(companyId)
+
+    const { value: newCompany } = await repo.findOneAndUpdate(
+      { _id: companyObjectId }, 
+      { $set: { name: companyName } }, 
+      { returnDocument: 'after' } as any
+    )
+
+    return {
+      id: newCompany._id.toString(),
+      name: newCompany.name
+    }
   }
 }

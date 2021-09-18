@@ -87,5 +87,14 @@ describe('Company Repository', () => {
       expect(find).toBeUndefined()
     })
   })
-})
 
+  describe('update name', () => {
+    it('should update company name', async () => {
+      const { id } = await sut.create({ companyName: 'old_name' })
+
+      const newCompany = await sut.updateName({ companyName: 'new_name', companyId: id })
+
+      expect(newCompany).toEqual({ id, name: 'new_name' })
+    })
+  })
+})
