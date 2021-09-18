@@ -3,6 +3,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 import { UpdateCompanyController } from '@/application/controllers'
 import { UpdateCompanyUseCase } from '@/domain/usecases/company'
 import { RequiredStringValidator } from '@/application/validations'
+import { InvalidNameError } from '@/domain/errors'
 
 describe('Create Company Controller', () => {
   let sut: UpdateCompanyController
@@ -30,6 +31,17 @@ describe('Create Company Controller', () => {
     const validators = sut.buildValidators({ companyName, companyId: id })
 
     expect(validators).toEqual([ new RequiredStringValidator(companyName, 'companyName')])
+  })
+
+  it('should return 400 if usecase returns known error', async () => {
+    updateCompanyUseCase.perform.mockResolvedValueOnce(new InvalidNameError())
+    
+    const httpResponse = await sut.handle({ companyName, companyId: id })
+
+    expect(httpResponse).toEqual({
+      statusCode: 400,
+      data: new InvalidNameError()
+    })
   })
 
   it('should return 200 if update succeeds', async () => {
