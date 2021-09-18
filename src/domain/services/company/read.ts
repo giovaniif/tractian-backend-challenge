@@ -1,4 +1,4 @@
-import { LoadCompanyByIdRepository } from '@/data/contracts/repos'
+import { LoadCompanyByIdRepository } from '@/domain/contracts/repos'
 import { ReadCompany } from '@/domain/features/company'
 
 export class ReadCompanyService {

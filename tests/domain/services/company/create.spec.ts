@@ -1,7 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { CreateCompanyRepository, LoadCompanyRepository } from '@/data/contracts/repos'
-import { CreateCompanyService } from '@/data/services/company'
+import { CreateCompanyRepository, LoadCompanyRepository } from '@/domain/contracts/repos'
+import { CreateCompanyService } from '@/domain/services/company'
 import { NameAlreadyInUseError, InvalidNameError } from '@/domain/errors'
 
 describe('Create Company Service', () => {

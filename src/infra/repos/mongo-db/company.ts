@@ -7,7 +7,7 @@ import {
   LoadCompanyByIdRepository,
   DeleteCompanyRepository,
   UpdateCompanyRepository,
-} from '@/data/contracts/repos'
+} from '@/domain/contracts/repos'
 
 import { MongoCompany } from '@/infra/entities/mongo-db'
 

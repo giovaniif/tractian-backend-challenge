@@ -1,4 +1,4 @@
-import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyRepository } from '@/data/contracts/repos'
+import { LoadCompanyByIdRepository, LoadCompanyRepository, UpdateCompanyRepository } from '@/domain/contracts/repos'
 import { CompanyNotFoundError, InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 import { UpdateCompany } from '@/domain/features/company'
 

@@ -1,4 +1,4 @@
-import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/data/contracts/repos'
+import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/domain/contracts/repos'
 import { DeleteCompany } from '@/domain/features/company'
 
 export class DeleteCompanyService {

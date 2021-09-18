@@ -1,4 +1,4 @@
-import { DeleteCompanyService } from '@/data/services/company'
+import { DeleteCompanyService } from '@/domain/services/company'
 import { makeMongoDBCompanyRepo } from '@/main/factories/repos'
 
 export const makeDeleteCompanyService = (): DeleteCompanyService => new DeleteCompanyService(makeMongoDBCompanyRepo())

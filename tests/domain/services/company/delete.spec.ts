@@ -1,7 +1,7 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
-import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/data/contracts/repos'
-import { DeleteCompanyService } from '@/data/services/company'
+import { LoadCompanyByIdRepository, DeleteCompanyRepository } from '@/domain/contracts/repos'
+import { DeleteCompanyService } from '@/domain/services/company'
 
 describe('Delete Company Service', () => {
   let sut: DeleteCompanyService

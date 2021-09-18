@@ -1,4 +1,4 @@
-import { LoadCompanyRepository } from '@/data/contracts/repos'
+import { LoadCompanyRepository } from '@/domain/contracts/repos'
 import { ListCompanies } from '@/domain/features/company'
 
 export class ListCompaniesService implements ListCompanies {

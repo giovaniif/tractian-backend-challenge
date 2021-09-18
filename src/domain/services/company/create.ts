@@ -1,4 +1,4 @@
-import { CreateCompanyRepository, LoadCompanyRepository } from '@/data/contracts/repos'
+import { CreateCompanyRepository, LoadCompanyRepository } from '@/domain/contracts/repos'
 import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 import { CreateCompany } from '@/domain/features/company'
 
