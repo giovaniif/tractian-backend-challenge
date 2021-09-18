@@ -6,21 +6,16 @@
   - [x] *Delete* Company
   - [x] *Update* company
   - [x] *List* All
+- [x] **User**
+  - [x] Add user to company
 - [ ] **Unit**
-  - [ ] *Create* Unit
-  - [ ] *Read* Unit
-  - [ ] *Delete* Unit
-  - [ ] *Update* Unit
-  - [ ] *List* All
+  - [ ] Add unit to company
+  - [ ] Remove unit from company
+  - [ ] Get all units of a company
 - [ ] **Asset**
-  - [ ] *Create* Asset
-  - [ ] *Read* Asset
-  - [ ] *Delete* Asset
-  - [ ] *Update* Asset
-  - [ ] *List* All
-- [ ] **User**
-  - [ ] *Create* User
-  - [ ] *Read* User
-  - [ ] *Delete* User
-  - [ ] *Update* User
-  - [ ] *List* All
+  - [ ] Add asset to unit
+  - [ ] Get single asset data
+  - [ ] Remove asset from unit
+  - [ ] Update asset data
+  - [ ] List all assets from unit
+  - [ ] Assign user to asset
