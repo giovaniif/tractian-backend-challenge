@@ -9,7 +9,7 @@ export class MongoUser {
   name!: string
 
   @Column()
-  email!: string[]
+  email!: string
 
   @ObjectIdColumn()
   companyId!: ObjectID
