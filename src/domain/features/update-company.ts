@@ -7,6 +7,7 @@ export interface UpdateCompany {
 export namespace UpdateCompany {
   export type Params = {
     companyName: string
+    companyId: string
   }
 
   export type Result = { companyName: string, id: string } | NameAlreadyInUseError | InvalidNameError
