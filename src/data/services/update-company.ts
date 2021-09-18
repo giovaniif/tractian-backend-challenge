@@ -1,5 +1,5 @@
 import { LoadCompanyByIdRepository, LoadCompanyRepository } from '@/data/contracts/repos'
-import { InvalidNameError } from '@/domain/errors'
+import { InvalidNameError, NameAlreadyInUseError } from '@/domain/errors'
 import { UpdateCompany } from '@/domain/features/update-company'
 
 export class UpdateCompanyService implements UpdateCompany {
@@ -8,6 +8,8 @@ export class UpdateCompanyService implements UpdateCompany {
   async perform({ companyName }: UpdateCompany.Params): Promise<any> {
     if (companyName.length < 2) return new InvalidNameError()
 
-    await this.companyRepo.load({ companyName })
+    const nameAlreadyInUse = await this.companyRepo.load({ companyName })
+
+    if (nameAlreadyInUse) return new NameAlreadyInUseError()
   }
 }
