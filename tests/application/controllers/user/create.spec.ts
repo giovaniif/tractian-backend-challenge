@@ -27,12 +27,14 @@ describe('Create User Controller', () => {
   //   expect(validators).toEqual([ new RequiredStringValidator(companyName, 'companyName')])
   // })
 
-  // it('should return 200 if creation succeeds', async () => {
-  //   const httpResponse = await sut.handle({ companyName })
+  it('should return 400 if usecase returns known error', async () => {
+    createUser.mockResolvedValueOnce(new Error('any_error'))
 
-  //   expect(httpResponse).toEqual({
-  //     statusCode: 200,
-  //     data: { companyName, id }
-  //   })
-  // })
+    const response = await sut.handle({ companyId: 'any_id', name: 'any_name', email: 'any_email' })
+
+    expect(response).toEqual({
+      statusCode: 400,
+      data: new Error('any_error')
+    })
+  })
 })
