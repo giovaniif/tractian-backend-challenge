@@ -8,7 +8,7 @@
   - [x] *List* All
 - [x] **User**
   - [x] Add user to company
-  - [ ] Get all from company
+  - [x] Get all from company
 - [ ] **Unit**
   - [ ] Add unit to company
   - [ ] Remove unit from company
