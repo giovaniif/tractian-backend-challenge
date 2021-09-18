@@ -7,7 +7,7 @@ export class UpdateCompanyService implements UpdateCompany {
     private readonly companyRepo: LoadCompanyRepository & LoadCompanyByIdRepository & UpdateCompanyRepository
   ) {}
 
-  async perform({ companyName, companyId }: UpdateCompany.Params): Promise<any> {
+  async perform({ companyName, companyId }: UpdateCompany.Params): Promise<UpdateCompany.Result> {
     if (companyName.length < 2) return new InvalidNameError()
 
     const companyExists = await this.companyRepo.loadById({ companyId })
@@ -16,6 +16,10 @@ export class UpdateCompanyService implements UpdateCompany {
     const nameAlreadyInUse = await this.companyRepo.load({ companyName })
     if (nameAlreadyInUse) return new NameAlreadyInUseError()
 
-    await this.companyRepo.updateName({ companyId, companyName })
+    const company = await this.companyRepo.updateName({ companyId, companyName })
+    return {
+      companyName: company.name,
+      id: company.id
+    }
   }
 }
