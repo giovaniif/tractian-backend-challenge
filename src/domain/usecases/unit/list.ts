@@ -7,6 +7,11 @@ type Setup = (unitRepo: LoadUnitRepository) => ListUnits
 
 export const setupListUnits: Setup = (unitRepo) => {
   return async () => {
-    return {} as any
+    const units = await unitRepo.loadAll()
+
+    return units.map(c => ({
+      name: c.name,
+      id: c.id.toString(),
+    }))
   }
 } 
