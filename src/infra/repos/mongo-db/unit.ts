@@ -1,7 +1,7 @@
 import { getMongoRepository } from 'typeorm'
 import { ObjectID } from 'bson'
 
-import { CreateUnitRepository, LoadUnitByIdRepository, DeleteUnitRepository } from '@/domain/contracts/repos'
+import { CreateUnitRepository, LoadUnitByIdRepository, DeleteUnitRepository, LoadUnitRepository } from '@/domain/contracts/repos'
 import { MongoUnit } from '@/infra/entities/mongo-db'
 
 type CreateParams = CreateUnitRepository.Params
@@ -13,7 +13,9 @@ type LoadByIdResult = LoadUnitByIdRepository.Result
 type DeleteParams = DeleteUnitRepository.Params
 type DeleteResult = DeleteUnitRepository.Result
 
-export class MongoDBUnitRepository implements CreateUnitRepository, LoadUnitByIdRepository, DeleteUnitRepository {
+type LoadAllResult = LoadUnitRepository.Result
+
+export class MongoDBUnitRepository implements CreateUnitRepository, LoadUnitByIdRepository, DeleteUnitRepository, LoadUnitRepository {
   async create({ companyId, name }: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoUnit)
 
@@ -37,5 +39,16 @@ export class MongoDBUnitRepository implements CreateUnitRepository, LoadUnitById
     const unitObjectId = new ObjectID(unitId)
 
     await repo.deleteOne({ _id: unitObjectId })
+  }
+
+  async loadAll(): Promise<LoadAllResult> {
+    const repo = getMongoRepository(MongoUnit)
+
+    const units = await repo.find()
+
+    return units.map(c => ({
+      name: c.name,
+      id: c._id.toString()
+    }))
   }
 }
