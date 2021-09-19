@@ -10,7 +10,10 @@ type CreateResult = CreateUnitRepository.Result
 type LoadByIdParams = LoadUnitByIdRepository.Params
 type LoadByIdResult = LoadUnitByIdRepository.Result
 
-export class MongoDBUnitRepository implements CreateUnitRepository, LoadUnitByIdRepository {
+type DeleteParams = DeleteUnitRepository.Params
+type DeleteResult = DeleteUnitRepository.Result
+
+export class MongoDBUnitRepository implements CreateUnitRepository, LoadUnitByIdRepository, DeleteUnitRepository {
   async create({ companyId, name }: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoUnit)
 
@@ -27,5 +30,12 @@ export class MongoDBUnitRepository implements CreateUnitRepository, LoadUnitById
     if (!unit) return undefined
 
     return { id: unit._id.toString(), name: unit.name }
+  }
+
+  async delete({ unitId }: DeleteParams): Promise<DeleteResult> {
+    const repo = getMongoRepository(MongoUnit)
+    const unitObjectId = new ObjectID(unitId)
+
+    await repo.deleteOne({ _id: unitObjectId })
   }
 }

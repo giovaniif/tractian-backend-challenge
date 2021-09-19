@@ -49,4 +49,15 @@ describe('MongoDB Unit Repository', () => {
       expect(result?.name).toEqual('any_name')
     })
   })
+
+  describe('delete', () => {
+    it('should delete', async () => {
+      const { id } = await sut.create({ name: 'any_name', companyId: 'any_id' })
+      
+      await sut.delete({ unitId: id })
+      const find = await sut.loadById({ unitId: id })
+
+      expect(find).toBeUndefined()
+    })
+  })
 })
