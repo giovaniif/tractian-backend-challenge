@@ -10,7 +10,7 @@
   - [x] Add user to company
   - [x] Get all from company
 - [ ] **Unit**
-  - [ ] Add unit to company
+  - [x] Add unit to company
   - [ ] Remove unit from company
   - [ ] Get all units of a company
 - [ ] **Asset**
