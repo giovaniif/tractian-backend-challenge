@@ -34,3 +34,11 @@ export namespace LoadUnitByIdRepository {
 
   export type Result = { name: string, id: string } | undefined
 }
+
+export interface LoadUnitRepository {
+  loadAll: () => Promise<LoadUnitRepository.Result>
+}
+
+export namespace LoadUnitRepository {
+  export type Result = Array<{ id: string, name: string }>
+}
