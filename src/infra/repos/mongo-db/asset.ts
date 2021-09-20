@@ -1,12 +1,15 @@
 import { getMongoRepository } from 'typeorm'
 
-import { CreateAssetRepository } from '@/domain/contracts/repos'
+import { CreateAssetRepository, LoadAssetsByUnitRepository } from '@/domain/contracts/repos'
 import { MongoAsset } from '@/infra/entities/mongo-db'
 
 type CreateParams = CreateAssetRepository.Params
 type CreateResult = CreateAssetRepository.Result
 
-export class MongoDBAssetRepository implements CreateAssetRepository {
+type LoadByUnitResult = LoadAssetsByUnitRepository.Result
+type LoadByUnitParams = LoadAssetsByUnitRepository.Params
+
+export class MongoDBAssetRepository implements CreateAssetRepository, LoadAssetsByUnitRepository {
   async create (params: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoAsset)
 
@@ -14,5 +17,17 @@ export class MongoDBAssetRepository implements CreateAssetRepository {
     await repo.save(asset)
 
     return { ...asset, id: asset._id.toString(), unitId: asset.unitId.toString() }
+  }
+
+  async loadByUnit ({ unitId }: LoadByUnitParams): Promise<LoadByUnitResult> {
+    const repo = getMongoRepository(MongoAsset)
+
+    const assets = await repo.find({ where: { unitId } })
+
+    return assets.map(asset => ({
+      ...asset,
+      unitId: asset.unitId.toString(),
+      id: asset._id.toString()
+    }))
   }
 }
