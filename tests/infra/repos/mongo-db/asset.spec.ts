@@ -33,4 +33,14 @@ describe('Asset Repository', () => {
       expect(name).toBe('any_name')
     })
   })
+
+  describe('loadByUnit', () => {
+    it('should return an array of assets', async () => {
+      await sut.create(params)
+
+      const result = await sut.loadByUnit({ unitId: params.unitId })
+      
+      expect(result.length).toBe(1)
+    })
+  })
 })
