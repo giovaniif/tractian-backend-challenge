@@ -1,29 +1,29 @@
 import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadUnitRepository } from '@/domain/contracts/repos'
-import { ListUnits, setupListUnits } from '@/domain/usecases/unit'
+import { ListUnitsFromCompany, setupListUnitsFromCompany } from '@/domain/usecases/unit'
 
-describe('List Units UseCase', () => {
-  let sut: ListUnits
+describe('List Units From Company UseCase', () => {
+  let sut: ListUnitsFromCompany
   let unitRepo: MockProxy<LoadUnitRepository>
 
   beforeAll(() => {
     unitRepo = mock()
-    unitRepo.loadAll.mockResolvedValue([{ name: 'any_name', id: 'any_id' }])
+    unitRepo.loadByCompany.mockResolvedValue([{ name: 'any_name', id: 'any_id' }])
   })
 
   beforeEach(() => {
-    sut = setupListUnits(unitRepo)
+    sut = setupListUnitsFromCompany(unitRepo)
   })
 
-  it('should call loadAll', async () => {
-    await sut()
+  it('should call loadByCompany', async () => {
+    await sut({ companyId: 'any_id' })
 
-    expect(unitRepo.loadAll).toHaveBeenCalledTimes(1)
+    expect(unitRepo.loadByCompany).toHaveBeenCalledTimes(1)
   })
 
-  it('should return same result as loadAll', async () => {
-    const units = await sut()
+  it('should return same result as loadByCompany', async () => {
+    const units = await sut({ companyId: 'any_id' })
 
     expect(units).toEqual([{ name: 'any_name', id: 'any_id' }])
   })

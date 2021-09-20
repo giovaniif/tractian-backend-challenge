@@ -37,8 +37,14 @@ export namespace LoadUnitByIdRepository {
 
 export interface LoadUnitRepository {
   loadAll: () => Promise<LoadUnitRepository.Result>
+  loadByCompany: (params: LoadUnitByCompanyRepository.Params) => Promise<LoadUnitByCompanyRepository.Result>
 }
 
 export namespace LoadUnitRepository {
+  export type Result = Array<{ id: string, name: string }>
+}
+
+export namespace LoadUnitByCompanyRepository {
+  export type Params = { companyId: string }
   export type Result = Array<{ id: string, name: string }>
 }
