@@ -18,4 +18,4 @@
   - [ ] Get single asset data
   - [ ] Remove asset from unit
   - [ ] Update asset data
-  - [ ] List all assets from unit
+  - [x] List all assets from unit
