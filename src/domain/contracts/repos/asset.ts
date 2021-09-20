@@ -80,3 +80,33 @@ export namespace LoadAssetByIdRepository {
     unitId: string 
   } | undefined
 }
+
+export interface UpdateAssetDataRepository {
+  update: (params: UpdateAssetDataRepository) => Promise<UpdateAssetDataRepository>
+}
+
+export namespace UpdateAssetDataRepository {
+  export type Params = {
+    id: string,
+    name?: string, 
+    imageUrl?: string, 
+    description?: string, 
+    model?: string, 
+    owner?: string, 
+    status?: string,
+    healthLevel?: string,
+    unitId?: string 
+  }
+
+  export type Result = {
+    id: string,
+    name: string, 
+    imageUrl: string, 
+    description: string, 
+    model: string, 
+    owner: string, 
+    status: string,
+    healthLevel: string,
+    unitId: string 
+  }
+}
