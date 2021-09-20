@@ -4,6 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import { MongoDBAssetRepository } from '@/infra/repos/mongo-db'
 import { MongoAsset } from '@/infra/entities/mongo-db'
 import { makeFakeDb, makeParams } from '@/tests/infra/mocks'
+import { ObjectID } from 'bson'
 
 describe('Asset Repository', () => {
   let repo: MongoRepository<MongoAsset>
@@ -41,6 +42,17 @@ describe('Asset Repository', () => {
       const result = await sut.loadByUnit({ unitId: params.unitId })
       
       expect(result.length).toBe(1)
+    })
+  })
+
+  describe('delete', () => {
+    it('should delete asset', async () => {
+      const { id } = await sut.create(params)
+      
+      await sut.delete({ assetId: id })
+      const find = await repo.find({ where: { _id: new ObjectID(id) } })
+
+      expect(find.length).toBe(0)
     })
   })
 })

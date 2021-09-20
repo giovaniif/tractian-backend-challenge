@@ -46,3 +46,15 @@ export namespace LoadAssetsByUnitRepository {
     unitId: string 
   }>
 }
+
+export interface DeleteAssetRepository {
+  delete: (params: DeleteAssetRepository.Params) => Promise<DeleteAssetRepository.Result>
+}
+
+export namespace DeleteAssetRepository {
+  export type Params = {
+    assetId: string
+  }
+
+  export type Result = void
+}

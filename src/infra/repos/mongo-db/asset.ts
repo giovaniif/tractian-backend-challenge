@@ -1,7 +1,8 @@
 import { getMongoRepository } from 'typeorm'
 
-import { CreateAssetRepository, LoadAssetsByUnitRepository } from '@/domain/contracts/repos'
+import { CreateAssetRepository, LoadAssetsByUnitRepository, DeleteAssetRepository } from '@/domain/contracts/repos'
 import { MongoAsset } from '@/infra/entities/mongo-db'
+import { ObjectID } from 'bson'
 
 type CreateParams = CreateAssetRepository.Params
 type CreateResult = CreateAssetRepository.Result
@@ -9,7 +10,10 @@ type CreateResult = CreateAssetRepository.Result
 type LoadByUnitResult = LoadAssetsByUnitRepository.Result
 type LoadByUnitParams = LoadAssetsByUnitRepository.Params
 
-export class MongoDBAssetRepository implements CreateAssetRepository, LoadAssetsByUnitRepository {
+type DeleteParams = DeleteAssetRepository.Params
+type DeleteResult = DeleteAssetRepository.Result
+
+export class MongoDBAssetRepository implements CreateAssetRepository, LoadAssetsByUnitRepository, DeleteAssetRepository {
   async create (params: CreateParams): Promise<CreateResult> {
     const repo = getMongoRepository(MongoAsset)
 
@@ -29,5 +33,12 @@ export class MongoDBAssetRepository implements CreateAssetRepository, LoadAssets
       unitId: asset.unitId.toString(),
       id: asset._id.toString()
     }))
+  }
+
+  async delete ({ assetId }: DeleteParams): Promise<DeleteResult> {
+    const repo = getMongoRepository(MongoAsset)
+    const assetObjectId = new ObjectID(assetId)
+
+    await repo.deleteOne({ _id: assetObjectId })
   }
 }
