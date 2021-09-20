@@ -1,7 +1,7 @@
 import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm'
 
 @Entity('assets')
-export class MongoUnit {
+export class MongoAsset {
   @ObjectIdColumn()
   _id!: ObjectID
 
@@ -21,7 +21,7 @@ export class MongoUnit {
   owner!: string
 
   @Column()
-  status!: 'RUNNING' | 'ALERTING' | 'STOPPED'
+  status!: string
 
   @Column()
   healthLevel!: string
