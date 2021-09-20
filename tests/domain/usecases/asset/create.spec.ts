@@ -2,7 +2,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { CreateAsset, setupCreateAsset } from '@/domain/usecases/asset'
 import { CreateAssetRepository, LoadUnitByIdRepository } from '@/domain/contracts/repos'
-import { InvalidStatusError, UnitNotFoundError } from '@/domain/errors'
+import { InvalidHealthLevelError, InvalidStatusError, UnitNotFoundError } from '@/domain/errors'
 
 const makeParams = () => {
   return {
@@ -12,7 +12,7 @@ const makeParams = () => {
     model: 'any_model', 
     owner: 'any_owner', 
     status: 'RUNNING',
-    healthLevel: 'any_level',
+    healthLevel: '0',
     unitId: 'any_unit_id' 
   }
 }
@@ -53,6 +53,12 @@ describe('Create Asset UseCase', () => {
     const result = await sut({ ...params, status: 'invalid_status' })
 
     expect(result).toEqual(new InvalidStatusError())
+  })
+
+  it('should return InvalidHealthLevel if health level is invalid', async () => {
+    const result = await sut({ ...params, healthLevel: 'invalid_level' })
+
+    expect(result).toEqual(new InvalidHealthLevelError())
   })
 
   it('should call create with correct params if loadByIf returns data', async () => {
