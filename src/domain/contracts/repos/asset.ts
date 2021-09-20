@@ -58,3 +58,25 @@ export namespace DeleteAssetRepository {
 
   export type Result = void
 }
+
+export interface LoadAssetByIdRepository {
+  loadById: (params: LoadAssetByIdRepository.Params) => Promise<LoadAssetByIdRepository.Result>
+}
+
+export namespace LoadAssetByIdRepository {
+  export type Params = {
+    assetId: string
+  }
+
+  export type Result = {
+    id: string,
+    name: string, 
+    imageUrl: string, 
+    description: string, 
+    model: string, 
+    owner: string, 
+    status: string,
+    healthLevel: string,
+    unitId: string 
+  } | undefined
+}

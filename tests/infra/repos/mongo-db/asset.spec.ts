@@ -55,4 +55,21 @@ describe('Asset Repository', () => {
       expect(find.length).toBe(0)
     })
   })
+
+  describe('load by id', () => {
+    it('should return undefined if asset does not exist', async () => {
+      const asset = await sut.loadById({ assetId: 'a1425fcfcb3d856b5f7e49d9' })
+
+      expect(asset).toBeUndefined()
+    })
+
+    it('should return asset if it exists', async () => {
+      const asset = repo.create(params)
+      await repo.save(asset)
+
+      const result = await sut.loadById({ assetId: asset._id.toString() })
+
+      expect(result?.name).toEqual('any_name')
+    })
+  })
 })
