@@ -16,6 +16,6 @@
 - [ ] **Asset**
   - [x] Add asset to unit
   - [ ] Get single asset data
-  - [ ] Remove asset from unit
+  - [x] Remove asset from unit
   - [ ] Update asset data
   - [x] List all assets from unit
