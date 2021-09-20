@@ -12,7 +12,7 @@
 - [x] **Unit**
   - [x] Add unit to company
   - [x] Remove unit from company
-  - [ ] Get all units of a company
+  - [x] Get all units of a company
 - [ ] **Asset**
   - [x] Add asset to unit
   - [x] Get single asset data
