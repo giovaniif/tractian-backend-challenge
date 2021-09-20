@@ -82,20 +82,21 @@ export namespace LoadAssetByIdRepository {
 }
 
 export interface UpdateAssetDataRepository {
-  update: (params: UpdateAssetDataRepository) => Promise<UpdateAssetDataRepository>
+  update: (params: UpdateAssetDataRepository.Params) => Promise<UpdateAssetDataRepository.Result>
 }
 
 export namespace UpdateAssetDataRepository {
   export type Params = {
     id: string,
-    name?: string, 
-    imageUrl?: string, 
-    description?: string, 
-    model?: string, 
-    owner?: string, 
-    status?: string,
-    healthLevel?: string,
-    unitId?: string 
+    data: {
+      name?: string, 
+      imageUrl?: string, 
+      description?: string, 
+      model?: string, 
+      owner?: string, 
+      status?: string,
+      healthLevel?: string,
+    }
   }
 
   export type Result = {

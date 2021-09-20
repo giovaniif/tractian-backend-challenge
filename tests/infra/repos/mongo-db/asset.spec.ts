@@ -72,4 +72,15 @@ describe('Asset Repository', () => {
       expect(result?.name).toEqual('any_name')
     })
   })
+
+  describe('update', () => {
+    it('should update the data', async () => {
+      const oldAsset = await sut.create(params)
+
+      const newAsset = await sut.update({ id: oldAsset.id, data: { name: 'new_name' } })
+
+      expect(newAsset.name).toBe('new_name')
+      expect(newAsset.description).toBe(oldAsset.description)
+    })
+  })
 })
