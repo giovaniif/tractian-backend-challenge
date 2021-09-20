@@ -26,3 +26,21 @@ export namespace CreateAssetRepository {
     unitId: string 
   }
 }
+
+export interface LoadAllAssetsRepository {
+  loadAll: () => Promise<LoadAllAssetsRepository.Result>
+}
+
+export namespace LoadAllAssetsRepository {
+  export type Result = Array<{
+    id: string,
+    name: string, 
+    imageUrl: string, 
+    description: string, 
+    model: string, 
+    owner: string, 
+    status: string,
+    healthLevel: string,
+    unitId: string 
+  }>
+}
