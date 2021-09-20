@@ -15,7 +15,7 @@
   - [ ] Get all units of a company
 - [ ] **Asset**
   - [x] Add asset to unit
-  - [ ] Get single asset data
+  - [x] Get single asset data
   - [x] Remove asset from unit
   - [ ] Update asset data
   - [x] List all assets from unit
