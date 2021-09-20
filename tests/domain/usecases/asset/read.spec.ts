@@ -2,6 +2,7 @@ import { MockProxy, mock } from 'jest-mock-extended'
 
 import { LoadAssetByIdRepository } from '@/domain/contracts/repos'
 import { ReadAsset, setupReadAsset } from '@/domain/usecases/asset'
+import { AssetNotFoundError } from '@/domain/errors'
 
 describe('Read Asset UseCase', () => {
   let sut: ReadAsset
@@ -25,10 +26,10 @@ describe('Read Asset UseCase', () => {
     expect(assetRepo.loadById).toHaveBeenCalledTimes(1)
   })
 
-  it('should return undefined if loadById returns undefined', async () => {
+  it('should return AssetNotFound if loadById returns undefined', async () => {
     const result = await sut({ assetId })
 
-    expect(result).toBeUndefined()
+    expect(result).toEqual(new AssetNotFoundError())
   })
 
   it('should return asset data if loadById returns data', async () => {
