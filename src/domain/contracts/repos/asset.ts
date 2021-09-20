@@ -27,11 +27,13 @@ export namespace CreateAssetRepository {
   }
 }
 
-export interface LoadAllAssetsRepository {
-  loadAll: () => Promise<LoadAllAssetsRepository.Result>
+export interface LoadAssetsByUnitRepository {
+  loadByUnit: (params: LoadAssetsByUnitRepository.Params) => Promise<LoadAssetsByUnitRepository.Result>
 }
 
-export namespace LoadAllAssetsRepository {
+export namespace LoadAssetsByUnitRepository {
+  export type Params = { unitId: string }
+
   export type Result = Array<{
     id: string,
     name: string, 
