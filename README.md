@@ -17,8 +17,6 @@
 - Typeorm
 - MongoDB
 
-<br />
-
 ## Design Patterns
 
 - ### Builder
@@ -33,9 +31,6 @@
 
 In this project, the main purpose of implementing this design pattern was to reuse validation login inside the application controllers, ensuring the params I was going to need on each Request would be required</p>
 Another usage of this can be seen [here](https://github.com/giovaniif/tractian-backend-challenge/blob/main/src/application/controllers/user/create.ts), where I use it to ensure the *email* field in the request is in a valid email format.
-
-<br />
-<br />
 
 - ### Factory 
 ```typescript
