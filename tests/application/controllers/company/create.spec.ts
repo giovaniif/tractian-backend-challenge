@@ -29,6 +29,17 @@ describe('Create Company Controller', () => {
     expect(validators).toEqual([ new RequiredStringValidator(companyName, 'companyName')])
   })
 
+  it('should return 400 if usecase returns known error', async () => {
+    createCompany.mockResolvedValueOnce(new Error('any_error'))
+
+    const httpResponse = await sut.handle({ companyName })
+
+    expect(httpResponse).toEqual({
+      statusCode: 400,
+      data: new Error('any_error')
+    })
+  })
+
   it('should return 200 if creation succeeds', async () => {
     const httpResponse = await sut.handle({ companyName })
 
