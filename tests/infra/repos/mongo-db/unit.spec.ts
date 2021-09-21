@@ -70,4 +70,14 @@ describe('MongoDB Unit Repository', () => {
       expect(units.length).toBe(1)
     })
   })
+
+  describe('load by company', () => {
+    it('should return all units from given company', async () => {
+      await sut.create({ companyId: 'any_id', name: 'any_name' })
+
+      const units = await sut.loadByCompany({ companyId: 'any_id' })
+
+      expect(units.length).toBe(1)
+    })
+  })
 })
