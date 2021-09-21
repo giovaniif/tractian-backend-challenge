@@ -55,5 +55,8 @@ The main usage of Factories in this project can be seen under *src/main/factorie
 Heroku <br />
 https://tractian-backend-challenge.herokuapp.com/api
 
+## Online documentation
+https://www.postman.com/research-architect-36047217/workspace/tractian/documentation/13698417-43fed79e-34bc-49a6-9f55-58fb3b6fb972
+
 
 Made with :hearts: by Giovani Farias :wave: [Get in touch!](https://www.linkedin.com/in/giovani-farias-b97316186/)
