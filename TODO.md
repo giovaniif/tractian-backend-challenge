@@ -21,5 +21,5 @@
   - [x] List all assets from unit
 
 - [x] Deploy
-- [ ] Improve coverage to 100%
+- [x] Improve coverage to 100%
 - [ ] Docs
