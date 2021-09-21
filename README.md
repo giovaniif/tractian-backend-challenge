@@ -1,15 +1,8 @@
 <div align="center">
   <img src="https://tractian.com/intensivao3/logo-tractian.png" height="40px">
+  <h2 align="center">Backend API</h2>
 </div>
 <br />
-
-<div align="center">
-
-<h2 align="center">Backend API</h1>
-
-``` Talk is cheap, show me the code! - Linus Torvalds```
-
-</div>
 
 <div margin="10px 0" align="center">
     <img alt="Github Top Language" src="https://img.shields.io/github/languages/top/giovaniif/tractian-backend-challenge">
