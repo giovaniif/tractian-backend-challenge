@@ -22,3 +22,4 @@
 
 - [x] Deploy
 - [ ] Improve coverage to 100%
+- [ ] Docs
