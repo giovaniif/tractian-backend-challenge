@@ -22,4 +22,5 @@
 
 - [x] Deploy
 - [x] Improve coverage to 100%
-- [ ] Docs
+- [ ] Readme
+- [ ] API Docs
