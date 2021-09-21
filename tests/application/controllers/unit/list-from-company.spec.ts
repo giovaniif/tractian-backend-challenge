@@ -30,7 +30,7 @@ describe('List Units From Company Controller', () => {
   })
 
   it('should return 200 with units array', async () => {
-    const httpResponse = await sut.handle()
+    const httpResponse = await sut.handle({ companyId: 'any_id' })
 
     expect(httpResponse).toEqual({
       statusCode: 200,
